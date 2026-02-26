@@ -87,23 +87,23 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 z-40 h-full w-64 bg-sidebar-bg text-white
-          flex flex-col sidebar-transition
+          fixed top-0 left-0 z-40 h-full w-64 bg-sidebar-bg text-sidebar-text
+          flex flex-col sidebar-transition border-r border-slate-200/60
           md:translate-x-0 md:static md:z-auto
-          ${mobileOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0 md:opacity-100"}
+          ${mobileOpen ? "translate-x-0 opacity-100 shadow-xl" : "-translate-x-full opacity-0 md:opacity-100 md:shadow-none"}
         `}
       >
         {/* Logo / Brand */}
-        <div className="flex items-center gap-3 px-6 py-6 border-b border-white/10">
-          <span className="text-2xl">🇸🇪</span>
+        <div className="flex items-center gap-3 px-6 py-8 border-b border-slate-200/50">
+          <span className="text-3xl filter drop-shadow-sm">🇸🇪</span>
           <div>
-            <h1 className="text-lg font-bold tracking-tight">Learn Swedish</h1>
-            <p className="text-xs text-white/50">Your daily practice</p>
+            <h1 className="text-xl font-extrabold tracking-tight text-slate-800">Learn Swedish</h1>
+            <p className="text-xs font-medium text-slate-500">Your daily practice</p>
           </div>
         </div>
 
         {/* Navigation links */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        <nav className="flex-1 px-4 py-6 space-y-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -112,12 +112,12 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
                 className={`
-                  flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium
-                  transition-colors duration-150
+                  flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold
+                  transition-all duration-200 active:scale-95
                   ${
                     isActive
-                      ? "bg-sidebar-active text-white"
-                      : "text-white/70 hover:bg-sidebar-hover hover:text-white"
+                      ? "bg-primary text-white shadow-md shadow-primary/20"
+                      : "text-slate-600 hover:bg-slate-200/50 hover:text-slate-900"
                   }
                 `}
               >
@@ -129,10 +129,13 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
         </nav>
 
         {/* Footer with user + logout */}
-        <div className="px-4 py-4 border-t border-white/10 space-y-3">
+        <div className="px-4 py-6 border-t border-slate-200/50 space-y-4">
           {userEmail && (
-            <div className="px-2">
-              <p className="text-xs text-white/40 truncate" title={userEmail}>
+            <div className="px-4 py-3 bg-slate-100 rounded-xl border border-slate-200/60 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center text-primary font-bold shadow-inner">
+                {userEmail.charAt(0).toUpperCase()}
+              </div>
+              <p className="text-xs font-medium text-slate-600 truncate flex-1" title={userEmail}>
                 {userEmail}
               </p>
             </div>
@@ -140,11 +143,11 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
           <form action={signOut}>
             <button
               type="submit"
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium
-                         text-white/70 hover:bg-sidebar-hover hover:text-white transition-colors duration-150"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold
+                         text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 transition-all duration-200 active:scale-95"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
               Sign Out
             </button>
