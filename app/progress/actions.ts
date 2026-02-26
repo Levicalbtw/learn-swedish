@@ -51,12 +51,30 @@ export async function getProgressStats(): Promise<ProgressStats> {
   const cardsDueToday = progress.filter(p => new Date(p.next_review) <= now).length
   const totalReviews = progress.filter(p => p.last_reviewed !== null).length
 
+  // 1. Fetch all lessons to map IDs to Titles
+  const { data: lessons } = await supabase
+    .from('lessons')
+    .select('id, title')
+
+  const lessonMap = new Map<string, string>()
+  lessons?.forEach(l => lessonMap.set(l.id, l.title))
+
   // Category breakdown
   const categoryMap = new Map<string, { total: number; learned: number }>()
   for (const p of progress) {
     const vocabData = p.vocabulary as unknown
     const vocab = Array.isArray(vocabData) ? vocabData[0] : vocabData
-    const category = (vocab as { category?: string })?.category || 'unknown'
+    let category = (vocab as { category?: string })?.category || 'unknown'
+    
+    // If it's a lesson ID, map it to the title
+    if (category.startsWith('Lesson: ')) {
+      const id = category.replace('Lesson: ', '')
+      const title = lessonMap.get(id)
+      if (title) {
+        category = `Lesson: ${title}`
+      }
+    }
+
     const existing = categoryMap.get(category) || { total: 0, learned: 0 }
     existing.total += 1
     if (p.repetitions > 0) existing.learned += 1

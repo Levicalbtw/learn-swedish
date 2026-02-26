@@ -93,12 +93,21 @@ ${lessonContent}`
       return NextResponse.json({ error: 'No flashcards were generated.' }, { status: 500 })
     }
 
+    // 1.5 Fetch lesson title for better categorization
+    const { data: lessonData } = await supabase
+      .from('lessons')
+      .select('title')
+      .eq('id', lessonId)
+      .single()
+    
+    const categoryName = lessonData?.title ? `Lesson: ${lessonData.title}` : `Lesson: ${lessonId}`
+
     const vocabToInsert = flashcards.map(fv => ({
       swedish: fv.swedish.toLowerCase(),
       english: fv.english.toLowerCase(),
       example_sv: fv.example_sv,
       example_en: fv.example_en,
-      category: `Lesson: ${lessonId}`,
+      category: categoryName,
       level: lessonLevel || 'A1'
     }))
 
