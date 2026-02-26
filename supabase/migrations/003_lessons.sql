@@ -312,11 +312,182 @@ In Swedish, **"halv fyra"** means **3:30** (half TO four), NOT 4:30! This is the
 - **halv fem** = 4:30
 - **halv tolv** = 11:30
 
+3. Klockan är halv ett → 12:30'),
+
+-- Lesson 7: Dagar & Månader (Days & Months)
+('dagar-manader', 'Dagar & Månader — Days & Months', 'Learn the days of the week, the months of the year, and how to talk about time.', 'A1', 7,
+'# Dagar & Månader — Days & Months
+
+## Veckodagar (Days of the week)
+
+| Swedish | English |
+|---------|---------|
+| **måndag** | Monday |
+| **tisdag** | Tuesday |
+| **onsdag** | Wednesday |
+| **torsdag** | Thursday |
+| **fredag** | Friday |
+| **lördag** | Saturday |
+| **söndag** | Sunday |
+
+> 💡 **Grammar Trick:** Unlike English, days of the week are written with a **lowercase** letter in Swedish!
+
+## Månader (Months)
+
+| Swedish | English |
+|---------|---------|
+| **januari** | January |
+| **februari** | February |
+| **mars** | March |
+| **april** | April |
+| **maj** | May |
+| **juni** | June |
+| **juli** | July |
+| **augusti** | August |
+| **september** | September |
+| **oktober** | October |
+| **november** | November |
+| **december** | December |
+
+## Time Prepositions (When?)
+
+To say something happens ON a day or IN a month, use these prepositions:
+
+- **På** (On) for days: **på måndag** (on Monday)
+- **I** (In) for months/seasons: **i juli** (in July)
+
+> **Jag jobbar på tisdag.** — I work on Tuesday.
+> **Vi reser till Sverige i augusti.** — We travel to Sweden in August.
+
+## 💡 Did You Know?
+
+In Sweden, **Friday** and **Saturday** are sacred. The concept of **Fredagsmys** ("Friday cozy") involves entire families sitting on the couch eating tacos and candy. Meanwhile, Saturday is **Lördagsgodis** ("Saturday candy")—the traditional day when children are allowed to eat sweets!
+
 ## Practice
 
-What time is it?
-1. Klockan är halv sex → 5:30
-2. Klockan är tio → 10:00
-3. Klockan är halv ett → 12:30')
+Translate these phrases:
+1. See you on Friday! → Vi ses **på fredag**!
+2. My birthday is in May. → Min födelsedag är **i maj**.'),
+
+-- Lesson 8: Basic Verbs
+('basic-verbs', 'Att Ha, Att Göra, Att Gå — The 3 Power Verbs', 'Master the three most common verbs in the Swedish language.', 'A1', 8,
+'# 3 Power Verbs: Ha, Göra, Gå
+
+## The Best News About Swedish Verbs
+
+In Swedish, verbs **do not change based on the person**. Whether it’s I, You, We, or They, the verb stays exactly the same!
+
+## 1. Att Ha (To Have)
+The present tense is **har**.
+
+> **Jag har en hund.** — I have a dog.
+> **Vi har en bil.** — We have a car.
+> **Du har ett äpple.** — You have an apple.
+
+## 2. Att Göra (To Do / To Make)
+The present tense is **gör** (pronounced like "yer").
+
+> **Vad gör du?** — What are you doing?
+> **Jag gör mat.** — I am making food.
+> **Han gör ingenting.** — He is doing nothing.
+
+## 3. Att Gå (To Go / To Walk)
+The present tense is **går**.
+
+> **Jag går hem.** — I am walking home.
+> **Tåget går klockan tre.** — The train leaves at three.
+
+## 💡 Important: The Progressive Tense
+English has two present tenses ("I eat" and "I am eating"). Swedish only has **one**.
+
+"Jag går" means BOTH "I run" and "I am running". Don’t try to translate "I am doing"—just use the simple present verb!
+
+## Practice
+
+Which verb completes the sentence?
+1. Jag _____ en katt. (I have a cat) → **har**
+2. Vad _____ du? (What are you doing?) → **gör**
+3. Vi _____ till skolan. (We are walking to school) → **går**'),
+
+-- Lesson 9: Question Words
+('frageord', 'Vem, Vad, Var — Question Words', 'Learn to ask the 6 essential questions in Swedish.', 'A1', 9,
+'# Frågeord — Question Words
+
+## The Core 6 Questions
+
+To have any conversation, you need to know how to ask questions. Memorize these six core *frågeord* (question words).
+
+| Swedish | English | Example |
+|---------|---------|---------|
+| **Vad?** | What? | **Vad** heter du? *(What is your name?)* |
+| **Vem?** | Who? | **Vem** är det? *(Who is that?)* |
+| **Var?** | Where? | **Var** bor du? *(Where do you live?)* |
+| **När?** | When? | **När** kommer du? *(When are you coming?)* |
+| **Varför?** | Why? | **Varför** är himlen blå? *(Why is the sky blue?)* |
+| **Hur?** | How? | **Hur** mår du? *(How are you?)* |
+
+## 💡 V2 Rule Reminder!
+
+Remember the V2 Rule from Lesson 4? In Swedish, the verb *always* comes second. When you use a question word, the question word is in Position 1, so the **verb must immediately follow it**.
+
+✅ **Var bor du?** (Where live you?)
+❌ ~~Var du bor?~~
+
+✅ **Vad gör han?** (What does he?)
+❌ ~~Vad han gör?~~
+
+## Practice
+
+Translate the question words:
+1. _____ jobbar du? (Where) → **Var**
+2. _____ tid är det? (What) → **Vad**
+3. _____ mycket kostar den? (How) → **Hur**'),
+
+-- Lesson 10: Family Vocabulary
+('familj', 'Familjen — The Swedish Family Tree', 'Learn how to describe your family using Sweden''s highly logical naming system.', 'A1', 10,
+'# Familjen — The Family Tree
+
+## Immediate Family
+
+| Swedish | English |
+|---------|---------|
+| **mamma** | mom |
+| **pappa** | dad |
+| **bror / broder** | brother |
+| **syster** | sister |
+| **barn** | child |
+
+## 💡 The Brilliant Grandparents System
+
+In English, we just say "grandfather", which is confusing because it could be your mom''s dad or your dad''s dad. Swedish fixes this with pure logic! You literally squish the parents together.
+
+- Father''s father = **farfar** (far + far)
+- Father''s mother = **farmor** (far + mor)
+- Mother''s father = **morfar** (mor + far)
+- Mother''s mother = **mormor** (mor + mor)
+
+> **Min mormor bor i Sverige.** — My maternal grandmother lives in Sweden.
+
+## Aunts & Uncles
+
+The same brilliant system applies here!
+
+- Father''s brother = **farbror**
+- Father''s sister = **faster**
+- Mother''s brother = **morbror**
+- Mother''s sister = **moster**
+
+## Extending Sentences with "Min" (My)
+
+- **Min mamma** (My mom)
+- **Min pappa** (My dad)
+- **Mitt barn** (My child - *ett-word!*)
+- **Mina föräldrar** (My parents - *plural!*)
+
+## Practice
+Figure out the family member:
+1. Din pappas mamma → **Farmor**
+2. Din mammas bror → **Morbror**
+3. Din syster och din bror → **Syskon** (siblings)')
 
 ON CONFLICT (slug) DO NOTHING;
