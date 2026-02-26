@@ -21,13 +21,13 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       {/* Navigation & Header */}
       <div className="mb-10 animate-fade-in-up">
         <Link 
-          href="/learn"
+          href="/"
           className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors mb-6"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Back to Lessons
+          Back to Learning Path
         </Link>
         
         <div className="inline-block px-3 py-1 bg-primary-light text-primary text-xs font-semibold rounded-full mb-3 uppercase tracking-wide">
