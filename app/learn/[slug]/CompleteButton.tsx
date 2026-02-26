@@ -36,12 +36,14 @@ export default function CompleteButton({
       onClick={handleToggle}
       disabled={isPending}
       className={`
-        flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200
+        flex items-center gap-3 px-8 py-3.5 rounded-2xl font-semibold transition-all duration-300
+        focus:outline-none focus:ring-4 focus:ring-offset-2
+        active:scale-95 shadow-sm
         ${completed
-          ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
-          : 'bg-primary text-white hover:bg-primary/90'
+          ? 'bg-emerald-100/80 text-emerald-800 hover:bg-emerald-200 focus:ring-emerald-500/30'
+          : 'bg-primary text-white hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5 focus:ring-primary/30'
         }
-        ${isPending ? 'opacity-70 cursor-not-allowed' : ''}
+        ${isPending ? 'opacity-70 cursor-not-allowed scale-100 translate-y-0' : ''}
       `}
     >
       {completed ? (
