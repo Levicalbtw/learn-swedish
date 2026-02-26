@@ -22,6 +22,7 @@ interface SpeechRecognitionInstance extends EventTarget {
   onresult: ((event: SpeechRecognitionEvent) => void) | null
   onerror: ((event: SpeechRecognitionErrorEvent) => void) | null
   onend: (() => void) | null
+  onstart: (() => void) | null
 }
 
 declare global {
@@ -44,42 +45,60 @@ export function useSpeechRecognition() {
 
   const startListening = useCallback(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-    if (!SpeechRecognition) return
+    if (!SpeechRecognition) {
+      console.error('Speech recognition not supported in this browser.')
+      return
+    }
+
+    // Stop existing instance if any
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop()
+      } catch (e) {
+        console.error('Error stopping existing recognition:', e)
+      }
+    }
 
     const recognition = new SpeechRecognition()
-    recognition.lang = 'sv-SE' // Swedish
+    recognition.lang = 'sv-SE'
     recognition.interimResults = true
     recognition.continuous = false
 
+    recognition.onstart = () => {
+      console.log('Speech recognition started')
+      setIsListening(true)
+      setTranscript('')
+    }
+
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      let finalTranscript = ''
-      let interimTranscript = ''
-
+      let currentTranscript = ''
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        const result = event.results[i]
-        if (result.isFinal) {
-          finalTranscript += result[0].transcript
-        } else {
-          interimTranscript += result[0].transcript
-        }
+        currentTranscript += event.results[i][0].transcript
       }
-
-      setTranscript(finalTranscript || interimTranscript)
+      console.log('Transcript update:', currentTranscript)
+      setTranscript(currentTranscript)
     }
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       console.error('Speech recognition error:', event.error)
+      if (event.error === 'not-allowed') {
+        alert('Please allow microphone access to use voice-to-text.')
+      }
       setIsListening(false)
     }
 
     recognition.onend = () => {
+      console.log('Speech recognition ended')
       setIsListening(false)
     }
 
     recognitionRef.current = recognition
-    recognition.start()
-    setIsListening(true)
-    setTranscript('')
+    try {
+      recognition.start()
+    } catch (e) {
+      console.error('Failed to start speech recognition:', e)
+      setIsListening(false)
+    }
   }, [])
 
   const stopListening = useCallback(() => {

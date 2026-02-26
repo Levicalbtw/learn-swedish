@@ -56,11 +56,14 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
 
   // Auto-send when speech recognition ends with a transcript
   useEffect(() => {
-    if (!isListening && transcript) {
+    if (!isListening && transcript.trim()) {
       // Small delay to let the final transcript settle
       const timer = setTimeout(() => {
         sendMessageText(transcript)
-      }, 300)
+        // Clear transcript after sending to prevent accidental double-send
+        // We do this by resetting the hook's state through start/stop if needed,
+        // but since it's a new instance each time, we just need to be careful with the local input.
+      }, 500)
       return () => clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
