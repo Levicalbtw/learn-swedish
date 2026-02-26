@@ -1,12 +1,15 @@
 -- Fix for Smart Flashcards 'database error'
 
 -- 1. Remove any accidental duplicates that were created before we added the unique constraint.
--- This keeps the oldest occurrence of each Swedish word and deletes the rest.
+-- This keeps the oldest occurrence of each Swedish word (row_num = 1) and deletes the rest.
+WITH duplicate_vocab AS (
+  SELECT id,
+         ROW_NUMBER() OVER(PARTITION BY swedish ORDER BY created_at ASC) as row_num
+  FROM vocabulary
+)
 DELETE FROM vocabulary
-WHERE id NOT IN (
-    SELECT MIN(id)
-    FROM vocabulary
-    GROUP BY swedish
+WHERE id IN (
+  SELECT id FROM duplicate_vocab WHERE row_num > 1
 );
 
 -- 2. Add UNIQUE constraint to the swedish column so UPSERT (ON CONFLICT) knows what to check against
