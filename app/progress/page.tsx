@@ -93,16 +93,20 @@ export default async function ProgressPage() {
       {stats.categories.length > 0 && (
         <div className="animate-fade-in-up bg-surface rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
           <h2 className="text-sm font-semibold text-foreground mb-4">Progress by Category</h2>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
             {stats.categories.map((cat) => {
               const catPercent = cat.total > 0 ? Math.round((cat.learned / cat.total) * 100) : 0
               return (
-                <div key={cat.category}>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-sm text-foreground capitalize">{cat.category}</span>
-                    <span className="text-xs text-muted">{cat.learned}/{cat.total}</span>
+                <div key={cat.category} className="group">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-foreground capitalize truncate pr-2">
+                      {cat.category}
+                    </span>
+                    <span className="text-[10px] tabular-nums text-muted flex-shrink-0">
+                      {cat.learned}/{cat.total}
+                    </span>
                   </div>
-                  <div className="w-full h-2.5 bg-surface-hover rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-surface-hover rounded-full overflow-hidden">
                     <div
                       className="h-full bg-primary rounded-full transition-all duration-700"
                       style={{ width: `${catPercent}%` }}
