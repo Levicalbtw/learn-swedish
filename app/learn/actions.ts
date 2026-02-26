@@ -14,6 +14,10 @@ export interface Lesson {
 
 export interface LessonDetail extends Lesson {
   content: string
+  nextLesson?: {
+    slug: string
+    title: string
+  }
 }
 
 export async function getLessons(): Promise<Lesson[]> {
@@ -58,6 +62,13 @@ export async function getLessonBySlug(slug: string): Promise<LessonDetail | null
 
   if (!lesson) return null
 
+  // Fetch next lesson metadata
+  const { data: nextLessonData } = await supabase
+    .from('lessons')
+    .select('slug, title')
+    .eq('lesson_order', lesson.lesson_order + 1)
+    .single()
+
   let completed = false
   if (user) {
     const { data } = await supabase
@@ -70,7 +81,11 @@ export async function getLessonBySlug(slug: string): Promise<LessonDetail | null
     completed = !!data
   }
 
-  return { ...lesson, completed }
+  return { 
+    ...lesson, 
+    completed,
+    nextLesson: nextLessonData || undefined
+  }
 }
 
 export async function toggleLessonComplete(lessonId: string) {

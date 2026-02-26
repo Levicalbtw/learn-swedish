@@ -147,6 +147,27 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
           </div>
           <CompleteButton lessonId={lesson.id} initialCompleted={lesson.completed} />
         </div>
+
+        {/* Next Lesson Button */}
+        {lesson.nextLesson && (
+          <div className="w-full mt-4 flex flex-col items-center">
+            <div className="h-px bg-slate-200 dark:bg-slate-800 w-full mb-8" />
+            <Link
+              href={`/learn/${lesson.nextLesson.slug}`}
+              className="group w-full max-w-md flex items-center justify-between p-6 rounded-2xl bg-primary text-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98]"
+            >
+              <div className="flex flex-col items-start text-left">
+                <span className="text-xs font-bold uppercase tracking-widest text-primary-light/80 mb-1">Up Next</span>
+                <span className="text-xl font-bold line-clamp-1">{lesson.nextLesson.title}</span>
+              </div>
+              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </div>
+            </Link>
+          </div>
+        )}
       </div>
       
       {/* Link to study words - encouraging vibe */}
