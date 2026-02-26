@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useSpeechSynthesis } from '../hooks/useSpeech'
 
 interface FlashcardProps {
   swedish: string
@@ -24,8 +25,11 @@ export default function Flashcard({
   totalCards,
 }: FlashcardProps) {
   const [isFlipped, setIsFlipped] = useState(false)
+  const { speak, isSpeaking } = useSpeechSynthesis()
 
-  const handleFlip = () => {
+  const handleFlip = (e: React.MouseEvent) => {
+    // Prevent flip when clicking the speaker button
+    if ((e.target as HTMLElement).closest('button')) return
     if (!isFlipped) setIsFlipped(true)
   }
 
@@ -76,7 +80,17 @@ export default function Flashcard({
             className="w-full bg-surface rounded-2xl border border-slate-200 dark:border-slate-800 p-8 md:p-12 shadow-sm"
             style={{ backfaceVisibility: 'hidden' }}
           >
-            <div className="text-center min-h-[200px] flex flex-col items-center justify-center">
+            <div className="text-center min-h-[200px] flex flex-col items-center justify-center relative">
+              <button 
+                onClick={(e) => { e.stopPropagation(); speak(swedish); }}
+                className={`absolute top-0 right-0 p-2 text-muted hover:text-primary transition-colors ${isSpeaking ? 'animate-pulse text-primary' : ''}`}
+                title="Hear pronunciation"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+              </button>
+              
               <p className="text-sm text-muted mb-4 uppercase tracking-wider">Swedish</p>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                 {swedish}
@@ -95,7 +109,17 @@ export default function Flashcard({
               transform: 'rotateY(180deg)',
             }}
           >
-            <div className="text-center min-h-[200px] flex flex-col items-center justify-center">
+            <div className="text-center min-h-[200px] flex flex-col items-center justify-center relative">
+               <button 
+                onClick={(e) => { e.stopPropagation(); speak(exampleSv || swedish); }}
+                className={`absolute top-0 right-0 p-2 text-muted hover:text-primary transition-colors ${isSpeaking ? 'animate-pulse text-primary' : ''}`}
+                title="Hear pronunciation"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+              </button>
+
               <p className="text-sm text-muted mb-4 uppercase tracking-wider">English</p>
               <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
                 {english}
