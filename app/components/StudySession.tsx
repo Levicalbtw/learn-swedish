@@ -68,17 +68,17 @@ export default function StudySession({ cards }: StudySessionProps) {
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-surface rounded-xl p-4 border border-black/5">
+          <div className="bg-surface rounded-xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm">
             <p className="text-2xl font-bold text-foreground">{total}</p>
             <p className="text-xs text-muted mt-1">Cards reviewed</p>
           </div>
-          <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-200">
-            <p className="text-2xl font-bold text-emerald-700">{easyCount}</p>
-            <p className="text-xs text-emerald-600 mt-1">Easy</p>
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-4 border border-emerald-200 dark:border-emerald-900/30 shadow-sm">
+            <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">{easyCount}</p>
+            <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-1">Easy</p>
           </div>
-          <div className="bg-red-50 rounded-xl p-4 border border-red-200">
-            <p className="text-2xl font-bold text-red-700">{hardCount}</p>
-            <p className="text-xs text-red-600 mt-1">Hard</p>
+          <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 border border-red-200 dark:border-red-900/30 shadow-sm">
+            <p className="text-2xl font-bold text-red-700 dark:text-red-400">{hardCount}</p>
+            <p className="text-xs text-red-600 dark:text-red-500 mt-1">Hard</p>
           </div>
         </div>
 
@@ -95,8 +95,8 @@ export default function StudySession({ cards }: StudySessionProps) {
         <div className="flex gap-4">
           <Link
             href="/"
-            className="flex-1 py-3 px-4 rounded-xl border border-black/10 text-foreground
-                       font-medium hover:bg-surface-hover transition-colors text-center"
+            className="flex-1 py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-700 text-foreground
+                       font-medium hover:bg-surface-hover transition-colors text-center shadow-sm"
           >
             Dashboard
           </Link>

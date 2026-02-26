@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
 import { createClient } from "@/lib/supabase/server";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,19 +36,26 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
-        {isLoggedIn ? (
-          <div className="flex min-h-screen">
-            <Sidebar userEmail={userEmail} />
-            <main className="flex-1 md:ml-0">
-              {children}
-            </main>
-          </div>
-        ) : (
-          // Login page — no sidebar, full width
-          <>{children}</>
-        )}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {isLoggedIn ? (
+            <div className="flex min-h-screen">
+              <Sidebar userEmail={userEmail} />
+              <main className="flex-1 md:ml-0">
+                {children}
+              </main>
+            </div>
+          ) : (
+            // Login page — no sidebar, full width
+            <>{children}</>
+          )}
+        </ThemeProvider>
       </body>
     </html>
   );

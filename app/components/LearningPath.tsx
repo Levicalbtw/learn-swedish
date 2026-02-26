@@ -22,7 +22,7 @@ export default function LearningPath({ lessons }: LearningPathProps) {
   return (
     <div className="w-full max-w-2xl mx-auto py-12 px-4 md:px-8 relative flex flex-col items-start md:items-center">
       {/* Background connecting line: Left on mobile, center on md */}
-      <div className="absolute top-0 bottom-0 left-[3.5rem] md:left-1/2 md:-ml-[2px] w-1 bg-slate-200/60 z-0 rounded-full" />
+      <div className="absolute top-0 bottom-0 left-[3.5rem] md:left-1/2 md:-ml-[2px] w-1 bg-slate-200/60 dark:bg-slate-800/60 z-0 rounded-full" />
 
       {Object.entries(lessonsByLevel).map(([level, levelLessons]) => (
         <div key={level} className="w-full flex flex-col items-start md:items-center relative z-10 mb-16">
@@ -114,9 +114,9 @@ function LessonNode({
         
         {/* 'Start' Badge for current lesson - adjust for mobile so it doesn't get cut off on left edge */}
         {isCurrent && (
-            <div className="absolute -top-10 left-[70%] md:left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-xl shadow-lg border border-slate-100 font-bold text-primary text-xs whitespace-nowrap animate-bounce z-20">
+            <div className="absolute -top-10 left-[70%] md:left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 font-bold text-primary text-xs whitespace-nowrap animate-bounce z-20">
               Start Here
-              <div className="absolute -bottom-1.5 left-1/4 md:left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-b border-r border-slate-100 rotate-45" />
+              <div className="absolute -bottom-1.5 left-1/4 md:left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-slate-800 border-b border-r border-slate-100 dark:border-slate-700 rotate-45" />
             </div>
         )}
 
@@ -153,12 +153,12 @@ function getNodeClasses(state: 'completed' | 'current' | 'locked') {
     case 'current':
       return 'bg-gradient-to-br from-violet-500 to-fuchsia-500 border-fuchsia-600 text-white shadow-primary/30 shadow-xl group-hover:shadow-primary/40'
     case 'locked':
-      return 'bg-slate-100 border-slate-300 text-slate-400'
+      return 'bg-slate-100 dark:bg-slate-800/50 border-slate-300 dark:border-slate-700 text-slate-400 dark:text-slate-500'
   }
 }
 
 function isLockedText(state: 'completed' | 'current' | 'locked') {
-  return state === 'locked' ? 'text-slate-400' : 'text-slate-700'
+  return state === 'locked' ? 'text-slate-400 dark:text-slate-500' : 'text-slate-700 dark:text-slate-200'
 }
 
 function getIconForState(state: 'completed' | 'current' | 'locked') {

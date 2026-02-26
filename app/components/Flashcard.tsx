@@ -42,7 +42,7 @@ export default function Flashcard({
         <span className="text-sm text-muted">
           Card {currentIndex + 1} of {totalCards}
         </span>
-        <span className="text-xs font-medium text-muted bg-surface px-2.5 py-1 rounded-full border border-black/5">
+        <span className="text-xs font-medium text-muted bg-surface px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-800">
           {category}
         </span>
       </div>
@@ -73,7 +73,7 @@ export default function Flashcard({
         >
           {/* Front of card */}
           <div
-            className="w-full bg-surface rounded-2xl border border-black/5 p-8 md:p-12 shadow-sm"
+            className="w-full bg-surface rounded-2xl border border-slate-200 dark:border-slate-800 p-8 md:p-12 shadow-sm"
             style={{ backfaceVisibility: 'hidden' }}
           >
             <div className="text-center min-h-[200px] flex flex-col items-center justify-center">
@@ -89,7 +89,7 @@ export default function Flashcard({
 
           {/* Back of card */}
           <div
-            className="w-full bg-surface rounded-2xl border border-black/5 p-8 md:p-12 shadow-sm absolute top-0 left-0"
+            className="w-full bg-surface rounded-2xl border border-slate-200 dark:border-slate-800 p-8 md:p-12 shadow-sm absolute top-0 left-0"
             style={{
               backfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
@@ -124,8 +124,8 @@ export default function Flashcard({
       >
         <button
           onClick={() => handleRate('hard')}
-          className="flex-1 py-4 px-6 rounded-xl bg-red-50 border border-red-200 text-red-700
-                     font-medium hover:bg-red-100 transition-colors duration-150
+          className="flex-1 py-4 px-6 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/30 text-red-700 dark:text-red-400
+                     font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors duration-150
                      flex items-center justify-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,8 +135,8 @@ export default function Flashcard({
         </button>
         <button
           onClick={() => handleRate('easy')}
-          className="flex-1 py-4 px-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700
-                     font-medium hover:bg-emerald-100 transition-colors duration-150
+          className="flex-1 py-4 px-6 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-900/30 text-emerald-700 dark:text-emerald-400
+                     font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors duration-150
                      flex items-center justify-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

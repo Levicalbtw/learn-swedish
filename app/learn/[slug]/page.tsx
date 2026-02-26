@@ -70,7 +70,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
             code: ({ node, className, children, ...props }) => {
               const match = /language-(\w+)/.exec(className || '')
               return !match ? (
-                <code className="bg-slate-100 text-primary-600 px-1.5 py-0.5 rounded-md text-[0.9em] font-medium font-mono" {...props}>
+                <code className="bg-slate-100 dark:bg-slate-800 text-primary-600 dark:text-primary-400 px-1.5 py-0.5 rounded-md text-[0.9em] font-medium font-mono" {...props}>
                   {children}
                 </code>
               ) : (
@@ -83,24 +83,24 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
               <pre className="bg-slate-900 text-slate-50 p-6 rounded-2xl overflow-x-auto mb-8 font-mono text-sm shadow-md" {...props} />
             ),
             table: ({ node, ...props }) => (
-              <div className="my-8 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-                <table className="w-full text-left bg-white border-collapse" {...props} />
+              <div className="my-8 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                <table className="w-full text-left bg-white dark:bg-surface border-collapse" {...props} />
               </div>
             ),
             thead: ({ node, ...props }) => (
-              <thead className="bg-slate-50 border-b border-slate-200" {...props} />
+              <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800" {...props} />
             ),
             tbody: ({ node, ...props }) => (
-              <tbody className="divide-y divide-slate-100" {...props} />
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800" {...props} />
             ),
             tr: ({ node, ...props }) => (
-              <tr className="hover:bg-slate-50/80 transition-colors duration-150" {...props} />
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/80 transition-colors duration-150" {...props} />
             ),
             th: ({ node, ...props }) => (
-              <th className="px-6 py-4 text-sm font-semibold text-slate-900 uppercase tracking-wider" {...props} />
+              <th className="px-6 py-4 text-sm font-semibold text-foreground uppercase tracking-wider" {...props} />
             ),
             td: ({ node, ...props }) => (
-              <td className="px-6 py-4 text-slate-600 font-medium" {...props} />
+              <td className="px-6 py-4 text-foreground/70 font-medium" {...props} />
             ),
             strong: ({ node, children, ...props }) => {
               // Extract text content from children for the TTS engine
@@ -116,7 +116,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
               
               return (
                 <span className="inline-flex items-center gap-1.5 align-middle">
-                  <strong className="font-bold text-slate-900" {...props}>{children}</strong>
+                  <strong className="font-bold text-foreground" {...props}>{children}</strong>
                   <PlayAudioButton text={text} className="ml-0.5 -mt-0.5" />
                 </span>
               )
@@ -131,14 +131,14 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       </div>
 
       {/* Completion & Next Actions */}
-      <div className="mt-16 pt-8 border-t border-black/5 flex flex-col items-center justify-center gap-8 animate-fade-in-up animation-delay-200">
+      <div className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-8 animate-fade-in-up animation-delay-200">
         <GenerateFlashcardsButton 
           lessonId={lesson.id} 
           lessonContent={lesson.content} 
           lessonLevel={lesson.level} 
         />
         
-        <div className="h-px bg-slate-200 w-full max-w-xs" />
+        <div className="h-px bg-slate-200 dark:bg-slate-800 w-full max-w-xs" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 w-full">
           <div>
@@ -150,15 +150,15 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       </div>
       
       {/* Link to study words - encouraging vibe */}
-      <div className="mt-12 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent-light via-white to-accent-light/50 p-8 sm:p-10 border border-accent/20 shadow-sm transition-all hover:shadow-md animate-fade-in-up animation-delay-300">
+      <div className="mt-12 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent-light via-white to-accent-light/50 dark:from-accent-light/5 dark:via-slate-800/10 dark:to-accent-light/10 p-8 sm:p-10 border border-accent/20 dark:border-accent/10 shadow-sm transition-all hover:shadow-md animate-fade-in-up animation-delay-300">
         <div className="relative z-10 flex flex-col items-center text-center">
-          <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-5 border border-accent/10 transform group-hover:scale-110 transition-transform duration-300">
+          <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-5 border border-accent/10 dark:border-accent/20 transform group-hover:scale-110 transition-transform duration-300">
             🧠
           </div>
-          <h4 className="text-2xl font-bold text-slate-800 mb-3 tracking-tight">
+          <h4 className="text-2xl font-bold text-foreground mb-3 tracking-tight">
             Time to practice?
           </h4>
-          <p className="text-base text-slate-600 mb-8 max-w-md mx-auto">
+          <p className="text-base text-muted mb-8 max-w-md mx-auto">
             Lock these new words into your memory using our visual Spaced Repetition flashcards.
           </p>
           <Link 

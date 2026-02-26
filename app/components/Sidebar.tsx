@@ -53,6 +53,8 @@ const navItems = [
   },
 ];
 
+import ThemeToggle from "./ThemeToggle";
+
 export default function Sidebar({ userEmail }: { userEmail?: string }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -62,7 +64,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       {/* Mobile hamburger button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-white text-slate-700 shadow-md border border-slate-200 md:hidden hover:bg-slate-50 transition-colors"
+        className="fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-md border border-slate-200 dark:border-slate-700 md:hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
         aria-label="Toggle menu"
       >
         {mobileOpen ? (
@@ -79,7 +81,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-sm md:hidden transition-opacity"
+          className="fixed inset-0 z-30 bg-slate-900/20 dark:bg-black/40 backdrop-blur-sm md:hidden transition-opacity"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -88,18 +90,21 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       <aside
         className={`
           fixed top-0 left-0 z-40 h-[100dvh] w-64 bg-sidebar-bg text-sidebar-text
-          flex flex-col sidebar-transition border-r border-slate-200/60
+          flex flex-col sidebar-transition border-r border-slate-200/60 dark:border-slate-800
           md:translate-x-0 md:sticky md:top-0
           ${mobileOpen ? "translate-x-0 opacity-100 shadow-2xl" : "-translate-x-full opacity-0 md:opacity-100 md:shadow-none"}
         `}
       >
         {/* Logo / Brand */}
-        <div className="flex items-center gap-3 px-6 py-8 border-b border-slate-200/50">
-          <span className="text-3xl filter drop-shadow-sm">🇸🇪</span>
-          <div>
-            <h1 className="text-xl font-extrabold tracking-tight text-slate-800">Learn Swedish</h1>
-            <p className="text-xs font-medium text-slate-500">Your daily practice</p>
+        <div className="flex items-center justify-between px-6 py-8 border-b border-slate-200/50 dark:border-slate-800">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl filter drop-shadow-sm">🇸🇪</span>
+            <div>
+              <h1 className="text-xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100">Learn Swedish</h1>
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Your daily practice</p>
+            </div>
           </div>
+          <ThemeToggle />
         </div>
 
         {/* Navigation links */}

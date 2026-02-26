@@ -209,8 +209,8 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
               className={`
                 max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed
                 ${msg.role === 'user'
-                  ? 'bg-primary text-white rounded-br-md'
-                  : 'bg-surface border border-black/5 text-foreground rounded-bl-md'
+                  ? 'bg-primary text-white rounded-br-md shadow-sm'
+                  : 'bg-surface border border-slate-200 dark:border-slate-800 text-foreground rounded-bl-md shadow-sm'
                 }
               `}
             >
@@ -263,19 +263,19 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
 
       {/* Listening indicator */}
       {isListening && (
-        <div className="flex items-center justify-center gap-2 py-2 bg-red-50 border-t border-red-200">
+        <div className="flex items-center justify-center gap-2 py-2 bg-red-50 dark:bg-red-900/20 border-t border-red-200 dark:border-red-900/30">
           <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-          <span className="text-sm text-red-600 font-medium">
+          <span className="text-sm text-red-600 dark:text-red-400 font-medium">
             Listening... Speak in Swedish
           </span>
           {transcript && (
-            <span className="text-sm text-red-400 italic ml-2">&ldquo;{transcript}&rdquo;</span>
+            <span className="text-sm text-red-400 dark:text-red-300 italic ml-2">&ldquo;{transcript}&rdquo;</span>
           )}
         </div>
       )}
 
       {/* Input area */}
-      <div className="border-t border-black/5 bg-surface p-4">
+      <div className="border-t border-slate-200 dark:border-slate-800 bg-surface p-4">
         <div className="flex gap-2 max-w-3xl mx-auto">
           {/* Mic button */}
           {sttSupported && (
@@ -308,10 +308,10 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
             onKeyDown={handleKeyDown}
             placeholder={isListening ? 'Listening...' : 'Skriv något på svenska... (Type something in Swedish...)'}
             disabled={isLoading || isListening}
-            className="flex-1 px-4 py-3 rounded-xl border border-black/10 bg-background
+            className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-background
                        text-foreground placeholder:text-muted/50
                        focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
-                       transition-all duration-200 disabled:opacity-50"
+                       transition-all duration-200 disabled:opacity-50 shadow-inner"
           />
 
           {/* Send button */}
