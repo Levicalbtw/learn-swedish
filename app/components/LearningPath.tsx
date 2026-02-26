@@ -76,25 +76,27 @@ function LessonNode({
   const isCompleted = state === 'completed'
   const isCurrent = state === 'current'
   
-  // Zig-zag offset styling
-  const flexPos = offset === 'left' ? 'justify-start md:pr-12' : 'justify-end md:pl-12'
-  const textPos = offset === 'left' ? 'items-end text-right mr-4' : 'items-start text-left ml-4'
+  // Zig-zag offset styling for the text
+  const textPos = offset === 'left' ? 'items-end text-right right-full mr-6' : 'items-start text-left left-full ml-6'
+  // Sine wave translation for the bubble (optional vibe polish)
+  const nodeTranslate = offset === 'left' ? '-translate-x-8' : 'translate-x-8'
 
   const content = (
-    <div className={`flex items-center w-full ${flexPos} relative`}>
+    <div className="flex items-center justify-center w-full relative">
       
-      {/* Text Label Container - Hidden on very small screens, visible at md */}
-      <div className={`hidden md:flex flex-col absolute top-1/2 -translate-y-1/2 ${offset === 'left' ? 'right-[calc(50%+2.5rem)]' : 'left-[calc(50%+2.5rem)]'} ${textPos} w-48`}>
-        <span className={`text-xs font-bold uppercase tracking-widest mb-1 ${isLockedText(state)}`}>
-          Lesson {lesson.lesson_order}
-        </span>
-        <span className={`text-base font-bold ${isLockedText(state)} leading-tight`}>
-          {lesson.title}
-        </span>
-      </div>
+      {/* The Node Bubble Container */}
+      <div className={`relative group ${nodeTranslate}`}>
+        
+        {/* Text Label Container - Anchored to the bubble so it never overlaps */}
+        <div className={`hidden md:flex flex-col absolute top-1/2 -translate-y-1/2 ${textPos} w-48`}>
+          <span className={`text-xs font-bold uppercase tracking-widest mb-1 ${isLockedText(state)}`}>
+            Lesson {lesson.lesson_order}
+          </span>
+          <span className={`text-base font-bold ${isLockedText(state)} leading-tight`}>
+            {lesson.title}
+          </span>
+        </div>
 
-      {/* The Node Bubble */}
-      <div className="relative group mx-auto md:mx-0">
         {/* Pulsing rings for current lesson */}
         {isCurrent && (
           <>
@@ -111,6 +113,7 @@ function LessonNode({
             </div>
         )}
 
+        {/* The actual circle UI */}
         <div className={`
           relative z-10 flex items-center justify-center w-16 h-16 rounded-full border-[3px] shadow-sm transition-transform duration-300
           ${getNodeClasses(state)}
