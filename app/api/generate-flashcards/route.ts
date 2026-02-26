@@ -93,18 +93,6 @@ ${lessonContent}`
       return NextResponse.json({ error: 'No flashcards were generated.' }, { status: 500 })
     }
 
-    // 3. Database Insertion (Admin privilege required to insert into vocabulary and guarantee ON CONFLICT DO NOTHING works without RLS blocking reads)
-    // Actually, vocabulary RLS is "readable by all", but let's see if authenticated can INSERT. 
-    // Looking at 001_vocabulary_setup.sql, there is NO policy for INSERT on vocabulary. 
-    // We MUST use the service role key to insert global vocabulary, or bypass RLS.
-    // Let's use the service_role key to insert into the global vocabulary bank safely.
-    
-    const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
-    const supabaseAdmin = createSupabaseClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY! // fallback to anon if service key missing locally, but it might fail RLS
-    )
-
     const vocabToInsert = flashcards.map(fv => ({
       swedish: fv.swedish.toLowerCase(),
       english: fv.english.toLowerCase(),
@@ -115,7 +103,7 @@ ${lessonContent}`
     }))
 
     // Upsert vocabulary by swedish word
-    const { data: insertedVocab, error: vocabError } = await supabaseAdmin
+    const { data: insertedVocab, error: vocabError } = await supabase
       .from('vocabulary')
       .upsert(vocabToInsert, { onConflict: 'swedish', ignoreDuplicates: false })
       .select('id, swedish')
