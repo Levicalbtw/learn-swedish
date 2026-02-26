@@ -91,11 +91,11 @@ async function initializeUserCards(userId: string) {
 
   const existingIds = new Set((existing || []).map((e: { vocab_id: string }) => e.vocab_id))
 
-  // Get all vocabulary
+  // Get all vocabulary levels A1-B2
   const { data: allVocab } = await supabase
     .from('vocabulary')
     .select('id')
-    .eq('level', 'A1')
+    .in('level', ['A1', 'A2', 'B1', 'B2'])
 
   if (!allVocab) return
 
