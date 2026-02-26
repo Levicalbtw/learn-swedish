@@ -1,4 +1,4 @@
-import { getCardsForReview, getDueCategories } from './actions'
+import { getCardsForReview, getAllUserCategories } from './actions'
 import StudySession from '@/app/components/StudySession'
 import Link from 'next/link'
 
@@ -8,18 +8,18 @@ export default async function StudyPage({
   searchParams: Promise<{ category?: string }>
 }) {
   const resolvedSearchParams = await searchParams
-  const category = resolvedSearchParams.category || 'All'
+  const activeCategory = resolvedSearchParams.category || 'All'
   
-  const [cards, categories] = await Promise.all([
-    getCardsForReview(category),
-    getDueCategories()
+  const [cards, allCategories] = await Promise.all([
+    getCardsForReview(activeCategory),
+    getAllUserCategories()
   ])
 
   return (
     <div className="px-6 py-8 md:px-12 md:py-12 max-w-3xl mx-auto">
       {/* Header */}
       <div className="animate-fade-in-up mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+        <div className="flex flex-col gap-6">
           <div className="flex items-center gap-3">
             <div className="bg-primary-light rounded-xl p-2.5">
               <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,32 +29,34 @@ export default async function StudyPage({
             <div>
               <h1 className="text-2xl font-bold text-foreground">Study</h1>
               <p className="text-sm text-muted">
-                {cards.length > 0
+                {activeCategory === 'All' 
                   ? `${cards.length} card${cards.length === 1 ? '' : 's'} due for review`
-                  : 'No cards due right now'}
+                  : `Reviewing ${activeCategory} (${cards.length} card${cards.length === 1 ? '' : 's'})`
+                }
               </p>
             </div>
           </div>
 
           {/* Category Filter Pills */}
-          {categories.length > 0 && (
+          <div className="flex flex-col gap-3">
+            <p className="text-xs font-semibold text-muted uppercase tracking-wider">Filter by Category</p>
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/study"
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  category === 'All'
+                  activeCategory === 'All'
                     ? 'bg-primary text-white shadow-sm'
                     : 'bg-surface border border-slate-200 dark:border-slate-800 text-muted hover:border-primary/30'
                 }`}
               >
-                All
+                Due Today (All)
               </Link>
-              {categories.slice(0, 5).map((cat) => (
+              {allCategories.map((cat) => (
                 <Link
                   key={cat}
                   href={`/study?category=${encodeURIComponent(cat)}`}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all truncate max-w-[120px] ${
-                    category === cat
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all truncate max-w-[150px] ${
+                    activeCategory === cat
                       ? 'bg-primary text-white shadow-sm'
                       : 'bg-surface border border-slate-200 dark:border-slate-800 text-muted hover:border-primary/30'
                   }`}
@@ -63,7 +65,7 @@ export default async function StudyPage({
                 </Link>
               ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
 

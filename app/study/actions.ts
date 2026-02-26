@@ -19,7 +19,8 @@ export interface VocabCard {
 
 /**
  * Get all cards due for review (next_review <= now).
- * Also initializes progress entries for any new vocabulary words.
+ * If a specific category is provided (and not 'All'), we fetch ANY cards
+ * from that category to allow 'cramming' or practice even if not due.
  */
 export async function getCardsForReview(category?: string): Promise<VocabCard[]> {
   const supabase = await createClient()
@@ -30,7 +31,10 @@ export async function getCardsForReview(category?: string): Promise<VocabCard[]>
   // First, ensure user has progress entries for all vocab words
   await initializeUserCards(user.id)
 
-  // Fetch cards that are due for review
+  const isFiltered = category && category !== 'All'
+  const now = new Date().toISOString()
+
+  // Fetch cards
   let query = supabase
     .from('user_progress')
     .select(`
@@ -50,13 +54,17 @@ export async function getCardsForReview(category?: string): Promise<VocabCard[]>
       )
     `)
     .eq('user_id', user.id)
-    .lte('next_review', new Date().toISOString())
-    .order('next_review', { ascending: true })
+
+  // If filtered by category, we allow ANY cards (even not due)
+  // If not filtered (All), we only show due cards
+  if (!isFiltered) {
+    query = query.lte('next_review', now)
+  }
+
+  query = query.order('next_review', { ascending: true })
 
   // Apply category filter if provided
-  if (category && category !== 'All') {
-    // We need to filter by the vocabulary table's category
-    // In Supabase JS, for nested filters we can use dot notation if the join is simple
+  if (isFiltered) {
     query = query.filter('vocabulary.category', 'eq', category)
   }
 
@@ -67,10 +75,10 @@ export async function getCardsForReview(category?: string): Promise<VocabCard[]>
     return []
   }
 
-  // Filter out any rows where the vocabulary filter might have returned null (if filter didn't apply correctly at DB level)
-  return data
-    .filter((row: any) => row.vocabulary !== null)
-    .map((row: any) => {
+  // Filter out any rows where the vocabulary filter might have returned null
+  return (data as any[])
+    .filter((row) => row.vocabulary !== null)
+    .map((row) => {
       const vocab = row.vocabulary as any
       return {
         id: row.id as string,
@@ -89,9 +97,9 @@ export async function getCardsForReview(category?: string): Promise<VocabCard[]>
 }
 
 /**
- * Get all unique categories for the user's due cards
+ * Get all unique categories for the user's progress bank
  */
-export async function getDueCategories(): Promise<string[]> {
+export async function getAllUserCategories(): Promise<string[]> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return []
@@ -100,7 +108,6 @@ export async function getDueCategories(): Promise<string[]> {
     .from('user_progress')
     .select('vocabulary(category)')
     .eq('user_id', user.id)
-    .lte('next_review', new Date().toISOString())
 
   if (!data) return []
 
@@ -109,7 +116,8 @@ export async function getDueCategories(): Promise<string[]> {
     .filter(Boolean)
   )
 
-  return Array.from(categories) as string[]
+  // Sort alphabetically
+  return Array.from(categories).sort() as string[]
 }
 
 /**
