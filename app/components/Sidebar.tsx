@@ -62,7 +62,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       {/* Mobile hamburger button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 p-2 rounded-lg bg-sidebar-bg text-white md:hidden"
+        className="fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-white text-slate-700 shadow-md border border-slate-200 md:hidden hover:bg-slate-50 transition-colors"
         aria-label="Toggle menu"
       >
         {mobileOpen ? (
@@ -79,7 +79,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/40 md:hidden"
+          className="fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-sm md:hidden transition-opacity"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -87,10 +87,10 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 z-40 h-full w-64 bg-sidebar-bg text-sidebar-text
+          fixed top-0 left-0 z-40 h-[100dvh] w-64 bg-sidebar-bg text-sidebar-text
           flex flex-col sidebar-transition border-r border-slate-200/60
-          md:translate-x-0 md:static md:z-auto
-          ${mobileOpen ? "translate-x-0 opacity-100 shadow-xl" : "-translate-x-full opacity-0 md:opacity-100 md:shadow-none"}
+          md:translate-x-0 md:sticky md:top-0
+          ${mobileOpen ? "translate-x-0 opacity-100 shadow-2xl" : "-translate-x-full opacity-0 md:opacity-100 md:shadow-none"}
         `}
       >
         {/* Logo / Brand */}
@@ -103,7 +103,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
         </div>
 
         {/* Navigation links */}
-        <nav className="flex-1 px-4 py-6 space-y-2">
+        <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
