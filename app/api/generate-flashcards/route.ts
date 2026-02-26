@@ -30,8 +30,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Server misconfiguration: Missing LLM token' }, { status: 500 })
     }
 
-    const prompt = `You are a Swedish language teacher. I will give you the markdown content of a Swedish lesson.
-Extract exactly 10 of the most important Swedish vocabulary words or short phrases taught in this lesson.
+    // Prompt Shielding: Sanitize and truncate input
+    const sanitizedContent = lessonContent.slice(0, 3000).replace(/<script/gi, '')
+
+    const prompt = `### INSTRUCTION ###
+You are a Swedish language teacher. 
+Extract exactly 10 of the most important Swedish vocabulary words or short phrases taught in the lesson content provided below.
 For each word, provide:
 1. The Swedish word ("swedish")
 2. The English translation ("english")
@@ -40,8 +44,9 @@ For each word, provide:
 
 Respond ONLY with a valid JSON object. It must contain a single key "flashcards" which is an array of these 10 objects.
 
-Lesson content:
-${lessonContent}`
+### LESSON CONTENT ###
+${sanitizedContent}
+### END LESSON CONTENT ###`
 
     const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -53,7 +58,7 @@ ${lessonContent}`
         model: 'llama-3.1-8b-instant',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1,
-        response_format: { type: "json_object" } // Enforce JSON if supported by Groq, otherwise temp 0.1 helps
+        response_format: { type: "json_object" }
       })
     })
 
@@ -65,35 +70,27 @@ ${lessonContent}`
     const groqData = await groqResponse.json()
     let flashcardsText = groqData.choices[0].message.content
     
-    // Parse the JSON array. (Sometimes models wrap in { "flashcards": [] }, so handle both)
+    // Parse the JSON array.
     let flashcards: Flashcard[] = []
     try {
       const parsed = JSON.parse(flashcardsText)
-      if (Array.isArray(parsed)) {
-        flashcards = parsed
-      } else if (parsed.flashcards && Array.isArray(parsed.flashcards)) {
-        flashcards = parsed.flashcards
-      } else {
-        const keys = Object.keys(parsed)
-        if (keys.length > 0 && Array.isArray(parsed[keys[0]])) {
-           flashcards = parsed[keys[0]]
-        } else {
-             throw new Error("Could not find array in JSON")
-        }
-      }
+      flashcards = parsed.flashcards || parsed
     } catch (e) {
       console.error('Failed to parse AI output:', flashcardsText)
       return NextResponse.json({ error: 'AI returned invalid format' }, { status: 500 })
     }
 
-    // Slice to ensure exactly 10 (or whatever it gave us up to 10)
-    flashcards = flashcards.slice(0, 10)
+    flashcards = Array.isArray(flashcards) ? flashcards.slice(0, 10) : []
 
     if (flashcards.length === 0) {
       return NextResponse.json({ error: 'No flashcards were generated.' }, { status: 500 })
     }
 
-    // 1.5 Fetch lesson title for better categorization
+    // 3. SECURE WRITE: Use Admin Client to bypass RLS for private storage
+    const { createAdminClient } = await import('@/lib/supabase/server')
+    const adminSupabase = await createAdminClient()
+
+    // Fetch lesson title for better categorization
     const { data: lessonData } = await supabase
       .from('lessons')
       .select('title')
@@ -108,13 +105,14 @@ ${lessonContent}`
       example_sv: fv.example_sv,
       example_en: fv.example_en,
       category: categoryName,
-      level: lessonLevel || 'A1'
+      level: lessonLevel || 'A1',
+      user_id: session.user.id // TAG WITH USER ID FOR PRIVACY
     }))
 
-    // Upsert vocabulary by swedish word
-    const { data: insertedVocab, error: vocabError } = await supabase
+    // Upsert vocabulary - scoped to user_id (via migration indexes)
+    const { data: insertedVocab, error: vocabError } = await adminSupabase
       .from('vocabulary')
-      .upsert(vocabToInsert, { onConflict: 'swedish', ignoreDuplicates: false })
+      .upsert(vocabToInsert, { onConflict: 'swedish,user_id', ignoreDuplicates: false })
       .select('id, swedish')
 
     if (vocabError) {
