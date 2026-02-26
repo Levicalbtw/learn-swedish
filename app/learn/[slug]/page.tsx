@@ -157,7 +157,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
               className="group w-full max-w-md flex items-center justify-between p-6 rounded-2xl bg-primary text-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98]"
             >
               <div className="flex flex-col items-start text-left">
-                <span className="text-xs font-bold uppercase tracking-widest text-primary-light/80 mb-1">Up Next</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-primary-light/80 mb-1">Next Lesson</span>
                 <span className="text-xl font-bold line-clamp-1">{lesson.nextLesson.title}</span>
               </div>
               <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
