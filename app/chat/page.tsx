@@ -27,7 +27,7 @@ export default async function ChatPage() {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <div className="px-6 py-4 md:px-8 border-b border-black/5 bg-surface">
+      <div className="px-6 py-4 md:px-8 border-b border-slate-200 dark:border-slate-800 bg-surface">
         <div className="flex items-center gap-3 max-w-3xl mx-auto">
           <div className="bg-accent-light rounded-xl p-2.5">
             <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">

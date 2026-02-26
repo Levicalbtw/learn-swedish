@@ -27,17 +27,17 @@ export default function LoginForm() {
         </div>
 
         {/* Card */}
-        <div className="bg-surface rounded-2xl p-8 border border-black/5 shadow-sm">
+        <div className="bg-surface rounded-2xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
           {/* Error message */}
           {error && (
-            <div className="mb-6 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            <div className="mb-6 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/30 rounded-lg text-red-700 dark:text-red-400 text-sm">
               {error}
             </div>
           )}
 
           {/* Success message */}
           {message && (
-            <div className="mb-6 p-3 bg-accent-light border border-amber-200 rounded-lg text-amber-700 text-sm">
+            <div className="mb-6 p-3 bg-accent-light/50 dark:bg-accent/10 border border-accent/20 dark:border-accent/30 rounded-lg text-accent dark:text-accent-light text-sm">
               {message}
             </div>
           )}
@@ -57,10 +57,10 @@ export default function LoginForm() {
                 type="email"
                 required
                 placeholder="alex@example.com"
-                className="w-full px-4 py-3 rounded-xl border border-black/10 bg-background
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-background
                            text-foreground placeholder:text-muted/60
                            focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
-                           transition-all duration-200"
+                           transition-all duration-200 shadow-inner"
               />
             </div>
 
@@ -79,10 +79,10 @@ export default function LoginForm() {
                 required
                 placeholder="••••••••"
                 minLength={6}
-                className="w-full px-4 py-3 rounded-xl border border-black/10 bg-background
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-background
                            text-foreground placeholder:text-muted/60
                            focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
-                           transition-all duration-200"
+                           transition-all duration-200 shadow-inner"
               />
             </div>
 

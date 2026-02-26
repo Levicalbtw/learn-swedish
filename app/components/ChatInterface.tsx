@@ -287,7 +287,7 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
                 flex items-center justify-center
                 ${isListening
                   ? 'bg-red-500 text-white shadow-lg shadow-red-500/30 scale-105'
-                  : 'bg-background border border-black/10 text-muted hover:text-primary hover:border-primary/30'
+                  : 'bg-background border border-slate-200 dark:border-slate-800 text-muted hover:text-primary hover:border-primary/30'
                 }
                 disabled:opacity-50 disabled:cursor-not-allowed
               `}

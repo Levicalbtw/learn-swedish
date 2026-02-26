@@ -119,7 +119,7 @@ export default function GenerateFlashcardsButton({
       
       {/* Vibe description */}
       {status === 'idle' && (
-        <p className="text-xs text-slate-400 font-medium">
+        <p className="text-xs text-muted font-medium">
           Uses AI to automatically build your SRS deck
         </p>
       )}

@@ -64,7 +64,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
       {/* Mobile hamburger button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-md border border-slate-200 dark:border-slate-700 md:hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+        className="fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-surface text-foreground shadow-md border border-slate-200 dark:border-slate-800 md:hidden hover:bg-slate-50 dark:hover:bg-surface-hover transition-colors"
         aria-label="Toggle menu"
       >
         {mobileOpen ? (
@@ -100,8 +100,8 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
           <div className="flex items-center gap-3">
             <span className="text-3xl filter drop-shadow-sm">🇸🇪</span>
             <div>
-              <h1 className="text-xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100">Learn Swedish</h1>
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Your daily practice</p>
+              <h1 className="text-xl font-extrabold tracking-tight text-foreground">Learn Swedish</h1>
+              <p className="text-xs font-medium text-muted">Your daily practice</p>
             </div>
           </div>
           <ThemeToggle />
@@ -122,7 +122,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
                   ${
                     isActive
                       ? "bg-primary text-white shadow-md shadow-primary/20"
-                      : "text-slate-600 hover:bg-slate-200/50 hover:text-slate-900"
+                      : "text-muted hover:bg-sidebar-hover hover:text-foreground"
                   }
                 `}
               >
@@ -134,13 +134,13 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
         </nav>
 
         {/* Footer with user + logout */}
-        <div className="px-4 py-6 border-t border-slate-200/50 space-y-4">
+        <div className="px-4 py-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
           {userEmail && (
-            <div className="px-4 py-3 bg-slate-100 rounded-xl border border-slate-200/60 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center text-primary font-bold shadow-inner">
-                {userEmail.charAt(0).toUpperCase()}
+            <div className="px-4 py-3 bg-surface rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center text-primary font-bold shadow-inner uppercase">
+                {userEmail.charAt(0)}
               </div>
-              <p className="text-xs font-medium text-slate-600 truncate flex-1" title={userEmail}>
+              <p className="text-xs font-medium text-muted truncate flex-1" title={userEmail}>
                 {userEmail}
               </p>
             </div>
@@ -149,7 +149,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
             <button
               type="submit"
               className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold
-                         text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 transition-all duration-200 active:scale-95"
+                         text-muted hover:bg-sidebar-hover hover:text-foreground transition-all duration-200 active:scale-95"
             >
               <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

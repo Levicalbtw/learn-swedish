@@ -25,26 +25,26 @@ export default async function ProgressPage() {
 
       {/* Stats grid */}
       <div className="animate-fade-in-up grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-surface rounded-xl p-5 border border-black/5">
+        <div className="bg-surface rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
           <p className="text-3xl font-bold text-foreground">{stats.totalWords}</p>
           <p className="text-xs text-muted mt-1">Total words</p>
         </div>
-        <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-200">
-          <p className="text-3xl font-bold text-emerald-700">{stats.wordsLearned}</p>
-          <p className="text-xs text-emerald-600 mt-1">Words learned</p>
+        <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-5 border border-emerald-200 dark:border-emerald-900/30 shadow-sm">
+          <p className="text-3xl font-bold text-emerald-700 dark:text-emerald-400">{stats.wordsLearned}</p>
+          <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-1">Words learned</p>
         </div>
-        <div className="bg-primary-light rounded-xl p-5 border border-primary/20">
+        <div className="bg-primary-light rounded-xl p-5 border border-primary/20 dark:border-primary/10 shadow-sm">
           <p className="text-3xl font-bold text-primary">{stats.cardsDueToday}</p>
           <p className="text-xs text-primary/70 mt-1">Due today</p>
         </div>
-        <div className="bg-accent-light rounded-xl p-5 border border-accent/20">
+        <div className="bg-accent-light rounded-xl p-5 border border-accent/20 dark:border-accent/10 shadow-sm">
           <p className="text-3xl font-bold text-accent">{stats.totalReviews}</p>
           <p className="text-xs text-accent/70 mt-1">Total reviews</p>
         </div>
       </div>
 
       {/* Overall progress ring */}
-      <div className="animate-fade-in-up bg-surface rounded-xl border border-black/5 p-6 mb-8">
+      <div className="animate-fade-in-up bg-surface rounded-xl border border-slate-200 dark:border-slate-800 p-6 mb-8 shadow-sm">
         <h2 className="text-sm font-semibold text-foreground mb-4">Overall Vocabulary Progress</h2>
         <div className="flex items-center gap-6">
           {/* Simple progress circle */}
@@ -91,7 +91,7 @@ export default async function ProgressPage() {
 
       {/* Category breakdown */}
       {stats.categories.length > 0 && (
-        <div className="animate-fade-in-up bg-surface rounded-xl border border-black/5 p-6">
+        <div className="animate-fade-in-up bg-surface rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
           <h2 className="text-sm font-semibold text-foreground mb-4">Progress by Category</h2>
           <div className="space-y-4">
             {stats.categories.map((cat) => {

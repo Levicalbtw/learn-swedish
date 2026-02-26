@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
   // Avoid hydration mismatch by only rendering after mount
@@ -14,18 +14,18 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 animate-pulse border border-slate-200 dark:border-slate-700" />
+      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-surface-hover animate-pulse border border-slate-200 dark:border-slate-800" />
     )
   }
 
-  const isDark = theme === 'dark'
+  const isDark = resolvedTheme === 'dark'
 
   return (
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className={`
-        relative w-11 h-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary/40
-        ${isDark ? 'bg-indigo-600' : 'bg-slate-200'}
+        relative w-11 h-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-inner
+        ${isDark ? 'bg-primary' : 'bg-slate-200'}
       `}
       aria-label="Toggle theme"
     >
@@ -37,7 +37,7 @@ export default function ThemeToggle() {
         `}
       >
         {isDark ? (
-           <svg className="w-2.5 h-2.5 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+           <svg className="w-2.5 h-2.5 text-primary" fill="currentColor" viewBox="0 0 24 24">
              <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z" />
            </svg>
         ) : (

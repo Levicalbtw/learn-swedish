@@ -50,13 +50,13 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
               <h3 className="text-xl font-semibold text-foreground mt-8 mb-4 tracking-tight" {...props} />
             ),
             p: ({ node, ...props }) => (
-              <p className="text-lg text-foreground/80 leading-relaxed mb-6" {...props} />
+              <p className="text-lg text-foreground leading-relaxed mb-6" {...props} />
             ),
             ul: ({ node, ...props }) => (
-              <ul className="list-disc list-inside text-lg text-foreground/80 mb-6 space-y-2 ml-4" {...props} />
+              <ul className="list-disc list-inside text-lg text-foreground mb-6 space-y-2 ml-4" {...props} />
             ),
             ol: ({ node, ...props }) => (
-              <ol className="list-decimal list-inside text-lg text-foreground/80 mb-6 space-y-2 ml-4" {...props} />
+              <ol className="list-decimal list-inside text-lg text-foreground mb-6 space-y-2 ml-4" {...props} />
             ),
             li: ({ node, ...props }) => (
               <li className="leading-relaxed" {...props} />
@@ -64,13 +64,13 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
             blockquote: ({ node, ...props }) => (
               <div className="my-8 relative">
                 <div className="absolute top-0 left-0 w-1.5 h-full bg-primary rounded-l-xl"></div>
-                <blockquote className="bg-primary-light/30 border border-primary/10 p-6 rounded-r-xl rounded-l-sm backdrop-blur-sm shadow-sm text-foreground/90 italic text-lg leading-relaxed" {...props} />
+                <blockquote className="bg-primary/5 border border-primary/20 p-6 rounded-r-xl rounded-l-sm backdrop-blur-sm shadow-sm text-foreground italic text-lg leading-relaxed" {...props} />
               </div>
             ),
             code: ({ node, className, children, ...props }) => {
               const match = /language-(\w+)/.exec(className || '')
               return !match ? (
-                <code className="bg-slate-100 dark:bg-slate-800 text-primary-600 dark:text-primary-400 px-1.5 py-0.5 rounded-md text-[0.9em] font-medium font-mono" {...props}>
+                <code className="bg-slate-100 dark:bg-surface-hover text-primary font-bold px-1.5 py-0.5 rounded-md text-[0.9em] font-mono" {...props}>
                   {children}
                 </code>
               ) : (
@@ -80,27 +80,27 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
               )
             },
             pre: ({ node, ...props }) => (
-              <pre className="bg-slate-900 text-slate-50 p-6 rounded-2xl overflow-x-auto mb-8 font-mono text-sm shadow-md" {...props} />
+              <pre className="bg-slate-900 dark:bg-black text-slate-50 p-6 rounded-2xl overflow-x-auto mb-8 font-mono text-sm shadow-md" {...props} />
             ),
             table: ({ node, ...props }) => (
               <div className="my-8 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                <table className="w-full text-left bg-white dark:bg-surface border-collapse" {...props} />
+                <table className="w-full text-left bg-surface border-collapse" {...props} />
               </div>
             ),
             thead: ({ node, ...props }) => (
-              <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800" {...props} />
+              <thead className="bg-slate-50 dark:bg-surface-hover/50 border-b border-slate-200 dark:border-slate-800" {...props} />
             ),
             tbody: ({ node, ...props }) => (
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800" {...props} />
             ),
             tr: ({ node, ...props }) => (
-              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/80 transition-colors duration-150" {...props} />
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-surface-hover/30 transition-colors duration-150" {...props} />
             ),
             th: ({ node, ...props }) => (
-              <th className="px-6 py-4 text-sm font-semibold text-foreground uppercase tracking-wider" {...props} />
+              <th className="px-6 py-4 text-sm font-bold text-foreground uppercase tracking-wider" {...props} />
             ),
             td: ({ node, ...props }) => (
-              <td className="px-6 py-4 text-foreground/70 font-medium" {...props} />
+              <td className="px-6 py-4 text-foreground font-medium" {...props} />
             ),
             strong: ({ node, children, ...props }) => {
               // Extract text content from children for the TTS engine
@@ -150,9 +150,9 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       </div>
       
       {/* Link to study words - encouraging vibe */}
-      <div className="mt-12 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent-light via-white to-accent-light/50 dark:from-accent-light/5 dark:via-slate-800/10 dark:to-accent-light/10 p-8 sm:p-10 border border-accent/20 dark:border-accent/10 shadow-sm transition-all hover:shadow-md animate-fade-in-up animation-delay-300">
+      <div className="mt-12 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent-light via-surface to-accent-light/50 dark:from-accent-light/5 dark:via-surface-hover/10 dark:to-accent-light/10 p-8 sm:p-10 border border-accent/20 dark:border-accent/10 shadow-sm transition-all hover:shadow-md animate-fade-in-up animation-delay-300">
         <div className="relative z-10 flex flex-col items-center text-center">
-          <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-5 border border-accent/10 dark:border-accent/20 transform group-hover:scale-110 transition-transform duration-300">
+          <div className="w-16 h-16 bg-surface rounded-2xl flex items-center justify-center text-3xl shadow-sm mb-5 border border-accent/10 dark:border-accent/20 transform group-hover:scale-110 transition-transform duration-300">
             🧠
           </div>
           <h4 className="text-2xl font-bold text-foreground mb-3 tracking-tight">

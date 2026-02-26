@@ -114,9 +114,9 @@ function LessonNode({
         
         {/* 'Start' Badge for current lesson - adjust for mobile so it doesn't get cut off on left edge */}
         {isCurrent && (
-            <div className="absolute -top-10 left-[70%] md:left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 font-bold text-primary text-xs whitespace-nowrap animate-bounce z-20">
+            <div className="absolute -top-10 left-[70%] md:left-1/2 -translate-x-1/2 bg-surface px-3 py-1 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 font-bold text-primary text-xs whitespace-nowrap animate-bounce z-20">
               Start Here
-              <div className="absolute -bottom-1.5 left-1/4 md:left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-slate-800 border-b border-r border-slate-100 dark:border-slate-700 rotate-45" />
+              <div className="absolute -bottom-1.5 left-1/4 md:left-1/2 -translate-x-1/2 w-3 h-3 bg-surface border-b border-r border-slate-200 dark:border-slate-800 rotate-45" />
             </div>
         )}
 
@@ -153,12 +153,12 @@ function getNodeClasses(state: 'completed' | 'current' | 'locked') {
     case 'current':
       return 'bg-gradient-to-br from-violet-500 to-fuchsia-500 border-fuchsia-600 text-white shadow-primary/30 shadow-xl group-hover:shadow-primary/40'
     case 'locked':
-      return 'bg-slate-100 dark:bg-slate-800/50 border-slate-300 dark:border-slate-700 text-slate-400 dark:text-slate-500'
+      return 'bg-surface-hover/30 dark:bg-surface-hover/30 border-slate-300 dark:border-slate-800 text-muted'
   }
 }
 
 function isLockedText(state: 'completed' | 'current' | 'locked') {
-  return state === 'locked' ? 'text-slate-400 dark:text-slate-500' : 'text-slate-700 dark:text-slate-200'
+  return state === 'locked' ? 'text-muted/60' : 'text-foreground'
 }
 
 function getIconForState(state: 'completed' | 'current' | 'locked') {

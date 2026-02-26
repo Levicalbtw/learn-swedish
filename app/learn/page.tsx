@@ -45,7 +45,7 @@ export default async function LearnPage() {
               flex items-center gap-4 p-5 rounded-xl border transition-all duration-200
               ${lesson.completed
                 ? 'bg-emerald-50/50 border-emerald-200 hover:border-emerald-300'
-                : 'bg-surface border-black/5 hover:border-primary/30 hover:shadow-sm'
+                : 'bg-surface border border-slate-200 dark:border-slate-800 hover:border-primary/30 hover:shadow-sm'
               }
             `}>
               {/* Lesson number / checkmark */}
