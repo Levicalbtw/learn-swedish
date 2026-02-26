@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Groq from 'groq-sdk'
+import { getLessons } from '@/app/learn/actions'
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
@@ -54,11 +55,21 @@ export async function POST(request: Request) {
     content: msg.content,
   }))
 
+  // FETCH CONTEXT: Get the user's latest completed lesson
+  const lessons = await getLessons()
+  // They are sorted by lesson_order ascending. We reverse to find the latest completed one.
+  const latestCompletedLesson = [...lessons].reverse().find(l => l.completed)
+
+  let dynamicSystemPrompt = SYSTEM_PROMPT
+  if (latestCompletedLesson) {
+    dynamicSystemPrompt += `\n\nUSER CONTEXT:\nThe user recently completed the lesson: "${latestCompletedLesson.title}" (${latestCompletedLesson.description}).\nTry to subtly weave vocabulary or concepts from this topic into your conversation to help them practice!`
+  }
+
   // Stream response from Groq
   const stream = await groq.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: dynamicSystemPrompt },
       ...conversationMessages,
     ],
     stream: true,
