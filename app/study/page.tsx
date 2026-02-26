@@ -1,6 +1,6 @@
 import { getCardsForReview, getAllUserCategories } from './actions'
 import StudySession from '@/app/components/StudySession'
-import Link from 'next/link'
+import CategorySelector from '@/app/components/CategorySelector'
 
 export default async function StudyPage({
   searchParams,
@@ -19,7 +19,7 @@ export default async function StudyPage({
     <div className="px-6 py-8 md:px-12 md:py-12 max-w-3xl mx-auto">
       {/* Header */}
       <div className="animate-fade-in-up mb-8">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="flex items-center gap-3">
             <div className="bg-primary-light rounded-xl p-2.5">
               <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,35 +37,11 @@ export default async function StudyPage({
             </div>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-col gap-3">
-            <p className="text-xs font-semibold text-muted uppercase tracking-wider">Filter by Category</p>
-            <div className="flex flex-wrap gap-2">
-              <Link
-                href="/study"
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  activeCategory === 'All'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'bg-surface border border-slate-200 dark:border-slate-800 text-muted hover:border-primary/30'
-                }`}
-              >
-                Due Today (All)
-              </Link>
-              {allCategories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={`/study?category=${encodeURIComponent(cat)}`}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all truncate max-w-[150px] ${
-                    activeCategory === cat
-                      ? 'bg-primary text-white shadow-sm'
-                      : 'bg-surface border border-slate-200 dark:border-slate-800 text-muted hover:border-primary/30'
-                  }`}
-                >
-                  {cat}
-                </Link>
-              ))}
-            </div>
-          </div>
+          {/* Compact Category Selector */}
+          <CategorySelector 
+            categories={allCategories} 
+            activeCategory={activeCategory} 
+          />
         </div>
       </div>
 
