@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getLessonBySlug } from '../actions'
 import CompleteButton from './CompleteButton'
+import PlayAudioButton from '../../components/PlayAudioButton'
 
 export default async function LessonPage({ params }: { params: Promise<{ slug: string }> }) {
   // Await params for Next.js 15+ compatibility
@@ -100,9 +101,25 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
             td: ({ node, ...props }) => (
               <td className="px-6 py-4 text-slate-600 font-medium" {...props} />
             ),
-            strong: ({ node, ...props }) => (
-              <strong className="font-bold text-slate-900" {...props} />
-            ),
+            strong: ({ node, children, ...props }) => {
+              // Extract text content from children for the TTS engine
+              const getText = (child: any): string => {
+                if (typeof child === 'string') return child
+                if (Array.isArray(child)) return child.map(getText).join('')
+                if (child && typeof child === 'object' && 'props' in child) {
+                  return getText(child.props.children)
+                }
+                return ''
+              }
+              const text = getText(children)
+              
+              return (
+                <span className="inline-flex items-center gap-1.5 align-middle">
+                  <strong className="font-bold text-slate-900" {...props}>{children}</strong>
+                  <PlayAudioButton text={text} className="ml-0.5 -mt-0.5" />
+                </span>
+              )
+            },
             a: ({ node, ...props }) => (
               <a className="text-primary font-medium hover:text-primary/80 underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-all" {...props} />
             ),
