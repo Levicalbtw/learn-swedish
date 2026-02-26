@@ -20,15 +20,15 @@ export default function LearningPath({ lessons }: LearningPathProps) {
   const currentLessonId = currentLessonIndex !== -1 ? lessons[currentLessonIndex].id : null
 
   return (
-    <div className="w-full max-w-lg mx-auto py-12 px-4 relative flex flex-col items-center">
-      {/* Background connecting line */}
-      <div className="absolute top-0 bottom-0 left-1/2 -ml-[2px] w-1 bg-slate-200/60 z-0 rounded-full" />
+    <div className="w-full max-w-2xl mx-auto py-12 px-4 md:px-8 relative flex flex-col items-start md:items-center">
+      {/* Background connecting line: Left on mobile, center on md */}
+      <div className="absolute top-0 bottom-0 left-[3.5rem] md:left-1/2 md:-ml-[2px] w-1 bg-slate-200/60 z-0 rounded-full" />
 
       {Object.entries(lessonsByLevel).map(([level, levelLessons]) => (
-        <div key={level} className="w-full flex flex-col items-center relative z-10 mb-16">
+        <div key={level} className="w-full flex flex-col items-start md:items-center relative z-10 mb-16">
           
           {/* Section Header */}
-          <div className="bg-primary/10 border border-primary/20 backdrop-blur-sm px-6 py-2 rounded-2xl mb-12 shadow-sm animate-fade-in-up">
+          <div className="bg-primary/10 border border-primary/20 backdrop-blur-sm px-6 py-2 rounded-2xl mb-12 shadow-sm animate-fade-in-up ml-12 md:ml-0 md:mx-auto">
             <h2 className="text-xl font-bold text-primary tracking-tight">Section {level}</h2>
           </div>
 
@@ -54,7 +54,7 @@ export default function LearningPath({ lessons }: LearningPathProps) {
       
       {/* End of Path Celebration */}
       {currentLessonId === null && lessons.length > 0 && (
-         <div className="bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm px-8 py-4 rounded-3xl mt-8 shadow-sm text-center relative z-10 animate-fade-in-up">
+         <div className="bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm px-8 py-4 rounded-3xl mt-8 shadow-sm text-center relative z-10 animate-fade-in-up ml-4 md:ml-0">
            <span className="text-4xl mb-2 block">🏆</span>
            <h2 className="text-xl font-bold text-emerald-600 tracking-tight">All Caught Up!</h2>
            <p className="text-emerald-600/80 text-sm mt-1 font-medium">Wait for new lessons to drop.</p>
@@ -76,19 +76,26 @@ function LessonNode({
   const isCompleted = state === 'completed'
   const isCurrent = state === 'current'
   
-  // Zig-zag offset styling for the text
-  const textPos = offset === 'left' ? 'items-end text-right right-full mr-6' : 'items-start text-left left-full ml-6'
-  // Sine wave translation for the bubble (optional vibe polish)
-  const nodeTranslate = offset === 'left' ? '-translate-x-8' : 'translate-x-8'
+  // Text positioning: 
+  // Mobile: ALWAYS on the right (ml-5). 
+  // Desktop: Alternates left/right based on offset.
+  const desktopTextPos = offset === 'left' 
+    ? 'md:items-end md:text-right md:right-full md:left-auto md:mr-6 md:ml-0' 
+    : 'md:items-start md:text-left md:left-full md:ml-6'
+    
+  // Node translation:
+  // Mobile: No translation (0).
+  // Desktop: Zig-zags on the Y-axis center-line (-8 or +8).
+  const nodeTranslate = offset === 'left' ? 'md:-translate-x-8' : 'md:translate-x-8'
 
   const content = (
-    <div className="flex items-center justify-center w-full relative">
+    <div className="flex items-center w-full relative justify-start md:justify-center pl-6 md:pl-0">
       
       {/* The Node Bubble Container */}
-      <div className={`relative group ${nodeTranslate}`}>
+      <div className={`relative group shrink-0 ${nodeTranslate}`}>
         
-        {/* Text Label Container - Anchored to the bubble so it never overlaps */}
-        <div className={`hidden md:flex flex-col absolute top-1/2 -translate-y-1/2 ${textPos} w-48`}>
+        {/* Text Label Container - Visible on ALL screens now, but perfectly anchored */}
+        <div className={`flex flex-col absolute top-1/2 -translate-y-1/2 items-start text-left left-full ml-5 w-48 sm:w-64 md:w-48 ${desktopTextPos}`}>
           <span className={`text-xs font-bold uppercase tracking-widest mb-1 ${isLockedText(state)}`}>
             Lesson {lesson.lesson_order}
           </span>
@@ -105,11 +112,11 @@ function LessonNode({
           </>
         )}
         
-        {/* 'Start' Badge for current lesson */}
+        {/* 'Start' Badge for current lesson - adjust for mobile so it doesn't get cut off on left edge */}
         {isCurrent && (
-            <div className={`absolute -top-10 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-xl shadow-lg border border-slate-100 font-bold text-primary text-xs whitespace-nowrap animate-bounce z-20`}>
+            <div className="absolute -top-10 left-[70%] md:left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-xl shadow-lg border border-slate-100 font-bold text-primary text-xs whitespace-nowrap animate-bounce z-20">
               Start Here
-              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-b border-r border-slate-100 rotate-45" />
+              <div className="absolute -bottom-1.5 left-1/4 md:left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-b border-r border-slate-100 rotate-45" />
             </div>
         )}
 
