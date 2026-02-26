@@ -170,7 +170,6 @@ INSERT INTO vocabulary (swedish, english, example_sv, example_en, category, leve
   ('dansa', 'to dance', 'Vill du dansa?', 'Do you want to dance?', 'leisure', 'A1'),
   ('promenad', 'walk', 'Vi tar en promenad i parken.', 'We are taking a walk in the park.', 'leisure', 'A1'),
   ('fika', 'coffee break with snack', 'Ska vi fika?', 'Shall we have a fika?', 'leisure', 'A1'),
-  ('resa', 'to travel', 'Att resa är att leva.', 'To travel is to live.', 'leisure', 'A1'),
   ('spela', 'to play', 'Jag gillar att spela gitarr.', 'I like to play guitar.', 'leisure', 'A1'),
   ('vän', 'friend', 'Han är min bästa vän.', 'He is my best friend.', 'leisure', 'A1'),
 
@@ -187,7 +186,6 @@ INSERT INTO vocabulary (swedish, english, example_sv, example_en, category, leve
   ('kjol', 'skirt', 'Kjolen är ny.', 'The skirt is new.', 'fashion', 'A2'),
   ('strumpor', 'socks', 'Jag behöver köpa strumpor.', 'I need to buy socks.', 'fashion', 'A1'),
   ('paraply', 'umbrella', 'Glöm inte paraplyet, det regnar.', 'Don''t forget the umbrella, it''s raining.', 'fashion', 'A1'),
-  ('väska', 'handbag', 'Hon bär en liten väska.', 'She is carrying a small bag.', 'fashion', 'A1'),
   ('glasögon', 'glasses', 'Jag ser inte utan mina glasögon.', 'I can''t see without my glasses.', 'fashion', 'A2'),
   ('storlek', 'size', 'Vilken storlek har du?', 'What size do you have?', 'fashion', 'A1'),
 
@@ -252,7 +250,6 @@ INSERT INTO vocabulary (swedish, english, example_sv, example_en, category, leve
   ('stekpanna', 'frying pan', 'Stek fisken i en stekpanna.', 'Fry the fish in a frying pan.', 'kitchen', 'A2'),
   ('ugn', 'oven', 'Kakan är i ugnen.', 'The cake is in the oven.', 'kitchen', 'A1'),
   ('kylskåp', 'refrigerator', 'Mjölken står i kylskåpet.', 'The milk is in the fridge.', 'kitchen', 'A1'),
-  ('recept', 'recipe', 'Jag har ett jättebra recept.', 'I have a great recipe.', 'kitchen', 'A2'),
   ('ingrediens', 'ingredient', 'Vilka ingredienser behöver vi?', 'Which ingredients do we need?', 'kitchen', 'B1'),
   ('smaka', 'to taste', 'Smaka på maten!', 'Taste the food!', 'kitchen', 'A1'),
   ('kryddor', 'spices', 'Vi behöver fler kryddor.', 'We need more spices.', 'kitchen', 'A2'),
@@ -269,7 +266,6 @@ INSERT INTO vocabulary (swedish, english, example_sv, example_en, category, leve
   ('björn', 'bear', 'Björnen sover.', 'The bear is sleeping.', 'animals', 'A2'),
   ('varg', 'wolf', 'Vargen ylar mot månen.', 'The wolf is howling at the moon.', 'animals', 'B1'),
   ('fisk', 'fish', 'Det finns mycket fisk i sjön.', 'There are many fish in the lake.', 'animals', 'A1'),
-  ('skog', 'forest', 'Jag gillar att plocka svamp i skogen.', 'I like picking mushrooms in the forest.', 'nature', 'A1'),
   ('trädgård', 'garden', 'Min trädgård är full av blommor.', 'My garden is full of flowers.', 'nature', 'A1'),
   ('hav', 'sea / ocean', 'Havet är djupt.', 'The sea is deep.', 'nature', 'A1'),
   ('strand', 'beach', 'Vi ska till stranden idag.', 'We are going to the beach today.', 'nature', 'A1'),
@@ -291,16 +287,10 @@ INSERT INTO vocabulary (swedish, english, example_sv, example_en, category, leve
   ('bio', 'cinema', 'Vi ska på bio ikväll.', 'We are going to the cinema tonight.', 'city', 'A1'),
   ('park', 'park', 'Hunden springer i parken.', 'The dog is running in the park.', 'city', 'A1'),
   ('restaurang', 'restaurant', 'Maten på restaurangen var god.', 'The food at the restaurant was good.', 'city', 'A1'),
-  ('sjukhus', 'hospital', 'Sjukhuset ligger nära.', 'The hospital is nearby.', 'city', 'A1'),
-
-  -- Career & Professional (Expansion)
-  ('karriär', 'career', 'Hon vill göra karriär.', 'She wants to make a career.', 'career', 'B1'),
   ('presentation', 'presentation', 'Jag förbereder en presentation.', 'I am preparing a presentation.', 'career', 'B1'),
-  ('samarbete', 'collaboration', 'Vårt samarbete fungerar bra.', 'Our collaboration is working well.', 'career', 'B1'),
   ('nätverk', 'network', 'Det är viktigt med ett bra nätverk.', 'A good network is important.', 'career', 'B2'),
   ('förhandling', 'negotiation', 'Förhandlingen var tuff.', 'The negotiation was tough.', 'career', 'B2'),
   ('strategi', 'strategy', 'Vi behöver en ny strategi.', 'We need a new strategy.', 'career', 'B2'),
-  ('utmaning', 'challenge', 'Det här är en spännande utmaning.', 'This is an exciting challenge.', 'career', 'B1'),
   ('mål', 'goal', 'Vad är ditt mål?', 'What is your goal?', 'career', 'A2'),
   ('framgång', 'success', 'Hårt arbete leder till framgång.', 'Hard work leads to success.', 'career', 'B1'),
   ('misslyckande', 'failure', 'Vi lär oss av våra misslyckanden.', 'We learn from our failures.', 'career', 'B2'),
