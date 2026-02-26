@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm'
 import { getLessonBySlug } from '../actions'
 import CompleteButton from './CompleteButton'
 import PlayAudioButton from '../../components/PlayAudioButton'
+import GenerateFlashcardsButton from '../../components/GenerateFlashcardsButton'
 
 export default async function LessonPage({ params }: { params: Promise<{ slug: string }> }) {
   // Await params for Next.js 15+ compatibility
@@ -121,7 +122,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
               )
             },
             a: ({ node, ...props }) => (
-              <a className="text-primary font-medium hover:text-primary/80 underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-all" {...props} />
+               <a className="text-primary font-medium hover:text-primary/80 underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-all" {...props} />
             ),
           }}
         >
@@ -130,13 +131,22 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       </div>
 
       {/* Completion & Next Actions */}
-      <div className="mt-16 pt-8 border-t border-black/5 flex flex-col sm:flex-row items-center justify-between gap-6 animate-fade-in-up animation-delay-200">
-        <div>
-          <h4 className="text-base font-medium text-foreground mb-1">Finished this lesson?</h4>
-          <p className="text-sm text-muted">Mark it complete to track your progress.</p>
-        </div>
+      <div className="mt-16 pt-8 border-t border-black/5 flex flex-col items-center justify-center gap-8 animate-fade-in-up animation-delay-200">
+        <GenerateFlashcardsButton 
+          lessonId={lesson.id} 
+          lessonContent={lesson.content} 
+          lessonLevel={lesson.level} 
+        />
         
-        <CompleteButton lessonId={lesson.id} initialCompleted={lesson.completed} />
+        <div className="h-px bg-slate-200 w-full max-w-xs" />
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 w-full">
+          <div>
+            <h4 className="text-base font-medium text-foreground mb-1">Finished this lesson?</h4>
+            <p className="text-sm text-muted">Mark it complete to track your progress.</p>
+          </div>
+          <CompleteButton lessonId={lesson.id} initialCompleted={lesson.completed} />
+        </div>
       </div>
       
       {/* Link to study words - encouraging vibe */}
