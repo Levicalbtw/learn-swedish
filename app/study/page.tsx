@@ -18,7 +18,7 @@ export default async function StudyPage({
   return (
     <div className="px-6 py-8 md:px-12 md:py-12 max-w-3xl mx-auto">
       {/* Header */}
-      <div className="animate-fade-in-up mb-8">
+      <div className="animate-fade-in-up mb-8 relative z-40">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="flex items-center gap-3">
             <div className="bg-primary-light rounded-xl p-2.5">

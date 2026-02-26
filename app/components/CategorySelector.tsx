@@ -34,7 +34,7 @@ export default function CategorySelector({ categories, activeCategory }: Categor
   }
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative z-50" ref={dropdownRef}>
       <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-2 px-1">
         Current Topic
       </p>
@@ -42,7 +42,7 @@ export default function CategorySelector({ categories, activeCategory }: Categor
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full md:w-64 flex items-center justify-between px-4 py-3 bg-surface border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:border-primary/50 transition-all text-left group"
+        className="w-full md:w-64 flex items-center justify-between px-4 py-3 bg-surface border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:border-primary/50 transition-all text-left group relative z-50"
       >
         <div className="flex items-center gap-3 truncate">
           <div className={`w-2 h-2 rounded-full ${activeCategory === 'All' ? 'bg-primary' : 'bg-emerald-500'} animate-pulse`} />
