@@ -38,7 +38,7 @@ For each word, provide:
 3. A short, simple Swedish example sentence ("example_sv")
 4. The English translation of the example sentence ("example_en")
 
-Respond ONLY with a valid stringified JSON array of these 10 objects. Do not include markdown formatting like \`\`\`json. Just the raw array.
+Respond ONLY with a valid JSON object. It must contain a single key "flashcards" which is an array of these 10 objects.
 
 Lesson content:
 ${lessonContent}`
@@ -50,7 +50,7 @@ ${lessonContent}`
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama3-8b-8192',
+        model: 'llama-3.1-8b-instant',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1,
         response_format: { type: "json_object" } // Enforce JSON if supported by Groq, otherwise temp 0.1 helps
