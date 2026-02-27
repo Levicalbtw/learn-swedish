@@ -19,7 +19,7 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-const sql = readFileSync(join(__dirname, 'migrations', '012_more_b1_c1_lessons.sql'), 'utf-8')
+const sql = readFileSync(join(__dirname, 'migrations', '013_fix_b1_c1_lesson_order.sql'), 'utf-8')
 
 // Split by semicolons and run each statement
 const statements = sql
