@@ -124,6 +124,22 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
             a: ({ node, ...props }) => (
                <a className="text-primary font-medium hover:text-primary/80 underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-all" {...props} />
             ),
+            details: ({ node, ...props }) => (
+              <details className="group my-4 overflow-hidden rounded-2xl border border-primary/10 bg-primary/5 transition-all duration-300 open:bg-surface open:border-primary/20" {...props} />
+            ),
+            summary: ({ node, ...props }) => (
+              <summary className="list-none cursor-pointer px-6 py-3.5 flex items-center justify-between font-bold text-primary hover:bg-primary/10 transition-colors select-none focus:outline-none group-open:border-b group-open:border-primary/10">
+                <span className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Check Answer
+                </span>
+                <svg className="w-5 h-5 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+            ),
           }}
         >
           {lesson.content}
