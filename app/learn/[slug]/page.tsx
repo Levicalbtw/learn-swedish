@@ -16,6 +16,21 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
     notFound()
   }
 
+  // Dynamically wrap interactive exercises in <details> blocks
+  // This avoids tricky database migrations and securely modifies the presentation content.
+  const arrowPattern = /^(\d+\.\s+.*?)\s*(?:→|->|—|--|→)\s*(.*)$/gm
+  const parenthesizedPattern = /^(\d+\.\s+\(.*?\))\s*(?:→|->|—|--|→)\s*(.*)$/gm
+
+  const replacer = (match: string, question: string, answer: string) => {
+    if (answer.includes('<details>')) return match
+    return `${question}\n\n<details>\\n<summary>Check Answer</summary>\\n\\n${answer.trim()}\\n</details>`
+  }
+
+  const processedContent = lesson.content
+    .replace(/\r\n/g, '\n')
+    .replace(arrowPattern, replacer)
+    .replace(parenthesizedPattern, replacer)
+
   return (
     <div className="px-6 py-8 md:px-12 md:py-12 max-w-3xl mx-auto pb-32">
       {/* Navigation & Header */}
@@ -142,7 +157,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
             ),
           }}
         >
-          {lesson.content}
+          {processedContent}
         </ReactMarkdown>
       </div>
 
