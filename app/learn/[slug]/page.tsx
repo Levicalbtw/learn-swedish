@@ -24,7 +24,11 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
 
   const replacer = (match: string, question: string, answer: string) => {
     if (answer.includes('<details>')) return match
-    return `${question}\n\n<details>\n<summary>Check Answer</summary>\n\n${answer.trim()}\n</details>`
+    
+    // Clean up the answer (remove bold asterisks to let our custom CSS handle the styling)
+    const cleanAnswer = answer.replace(/\*\*/g, '').trim()
+    
+    return `${question}\n\n<details>\n<summary>Check Answer</summary>\n\n<div class="mt-4 p-4 rounded-xl bg-primary/10 border border-primary/20 text-primary font-medium flex items-center gap-3"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>${cleanAnswer}</span></div>\n</details>`
   }
 
   const processedContent = lesson.content
