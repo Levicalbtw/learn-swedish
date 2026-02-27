@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 import { getLessonBySlug } from '../actions'
 import CompleteButton from './CompleteButton'
 import PlayAudioButton from '../../components/PlayAudioButton'
@@ -23,7 +24,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
 
   const replacer = (match: string, question: string, answer: string) => {
     if (answer.includes('<details>')) return match
-    return `${question}\n\n<details>\\n<summary>Check Answer</summary>\\n\\n${answer.trim()}\\n</details>`
+    return `${question}\n\n<details>\n<summary>Check Answer</summary>\n\n${answer.trim()}\n</details>`
   }
 
   const processedContent = lesson.content
@@ -54,6 +55,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       <div className="animate-fade-in-up animation-delay-100">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
           components={{
             h1: ({ node, ...props }) => (
               <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-8 tracking-tight" {...props} />
