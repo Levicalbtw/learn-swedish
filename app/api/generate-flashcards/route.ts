@@ -172,7 +172,8 @@ ${sanitizedContent}
     return NextResponse.json({ success: true, count: newVocab.length })
 
   } catch (error) {
-    console.error('API Route Error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    const errMsg = error instanceof Error ? error.message : String(error)
+    console.error('API Route Error:', errMsg, error)
+    return NextResponse.json({ error: `Internal server error: ${errMsg}` }, { status: 500 })
   }
 }
