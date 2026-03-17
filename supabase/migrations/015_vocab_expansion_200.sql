@@ -224,9 +224,4 @@ INSERT INTO vocabulary (swedish, english, example_sv, example_en, category, leve
   ('kultur', 'culture', 'Svensk kultur är mer än bara köttbullar.', 'Swedish culture is more than just meatballs.', 'abstract', 'B1'),
   ('samhälle', 'society', 'Alla är en viktig del av vårt samhälle.', 'Everyone is an important part of our society.', 'abstract', 'B1'),
   ('demokrati', 'democracy', 'Demokrati är inte alltid självklart.', 'Democracy is not always to be taken for granted.', 'abstract', 'B2')
-ON CONFLICT (swedish) DO UPDATE SET
-  english = EXCLUDED.english,
-  example_sv = EXCLUDED.example_sv,
-  example_en = EXCLUDED.example_en,
-  category = EXCLUDED.category,
-  level = EXCLUDED.level;
+ON CONFLICT DO NOTHING;
