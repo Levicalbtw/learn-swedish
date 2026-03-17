@@ -109,26 +109,43 @@ ${sanitizedContent}
       user_id: session.user.id // TAG WITH USER ID FOR PRIVACY
     }))
 
-    // Upsert vocabulary - scoped to user_id (via migration indexes)
-    const { data: insertedVocab, error: vocabError } = await adminSupabase
+    // Check which words already exist for this user
+    const swedishWords = vocabToInsert.map(v => v.swedish)
+    const { data: existingVocab } = await adminSupabase
       .from('vocabulary')
-      .upsert(vocabToInsert, { onConflict: 'swedish,user_id', ignoreDuplicates: false })
       .select('id, swedish')
+      .eq('user_id', session.user.id)
+      .in('swedish', swedishWords)
 
-    if (vocabError) {
-      console.error('Vocab Insert Error:', vocabError)
-      return NextResponse.json({ error: 'Database error while saving vocabulary' }, { status: 500 })
+    const existingWords = new Set((existingVocab || []).map((v: { swedish: string }) => v.swedish))
+    const newVocab = vocabToInsert.filter(v => !existingWords.has(v.swedish))
+
+    // Collect IDs of already-existing words
+    let allVocabIds: string[] = (existingVocab || []).map((v: { id: string }) => v.id)
+
+    // Insert only genuinely new words
+    if (newVocab.length > 0) {
+      const { data: insertedVocab, error: vocabError } = await adminSupabase
+        .from('vocabulary')
+        .insert(newVocab)
+        .select('id, swedish')
+
+      if (vocabError) {
+        console.error('Vocab Insert Error:', vocabError)
+        return NextResponse.json({ error: 'Database error while saving vocabulary' }, { status: 500 })
+      }
+
+      allVocabIds = [...allVocabIds, ...(insertedVocab || []).map((v: { id: string }) => v.id)]
     }
 
     // 4. Link to User Progress
-    // We need to map the returned UUIDs to the user_progress table
-    if (!insertedVocab || insertedVocab.length === 0) {
-      return NextResponse.json({ message: 'Flashcards already exist.' }, { status: 200 })
+    if (allVocabIds.length === 0) {
+      return NextResponse.json({ message: 'Flashcards already exist.', success: true, count: 0 }, { status: 200 })
     }
 
-    const progressToInsert = insertedVocab.map((v: { id: string }) => ({
+    const progressToInsert = allVocabIds.map(vocabId => ({
       user_id: session.user.id,
-      vocab_id: v.id,
+      vocab_id: vocabId,
       ease_factor: 2.5,
       interval: 0,
       repetitions: 0
@@ -143,7 +160,7 @@ ${sanitizedContent}
        return NextResponse.json({ error: 'Failed to add flashcards to your deck' }, { status: 500 })
     }
 
-    return NextResponse.json({ success: true, count: progressToInsert.length })
+    return NextResponse.json({ success: true, count: newVocab.length })
 
   } catch (error) {
     console.error('API Route Error:', error)
