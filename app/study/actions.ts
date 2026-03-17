@@ -43,7 +43,7 @@ export async function getCardsForReview(category?: string): Promise<VocabCard[]>
       ease_factor,
       interval,
       repetitions,
-      vocabulary (
+      vocabulary!inner (
         id,
         swedish,
         english,
