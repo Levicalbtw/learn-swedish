@@ -86,10 +86,6 @@ ${sanitizedContent}
       return NextResponse.json({ error: 'No flashcards were generated.' }, { status: 500 })
     }
 
-    // 3. SECURE WRITE: Use Admin Client to bypass RLS for private storage
-    const { createAdminClient } = await import('@/lib/supabase/server')
-    const adminSupabase = await createAdminClient()
-
     // Fetch lesson title for better categorization
     const { data: lessonData } = await supabase
       .from('lessons')
@@ -114,7 +110,7 @@ ${sanitizedContent}
 
     // Check which words already exist for this user
     const swedishWords = vocabToInsert.map(v => v.swedish)
-    const { data: existingVocab, error: existingError } = await adminSupabase
+    const { data: existingVocab, error: existingError } = await supabase
       .from('vocabulary')
       .select('id, swedish')
       .eq('user_id', session.user.id)
@@ -133,7 +129,7 @@ ${sanitizedContent}
 
     // Insert only genuinely new words
     if (newVocab.length > 0) {
-      const { data: insertedVocab, error: vocabError } = await adminSupabase
+      const { data: insertedVocab, error: vocabError } = await supabase
         .from('vocabulary')
         .insert(newVocab)
         .select('id, swedish')
