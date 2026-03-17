@@ -10,10 +10,11 @@ export default async function StudyPage({
   const resolvedSearchParams = await searchParams
   const activeCategory = resolvedSearchParams.category || 'All'
   
-  const [cards, allCategories] = await Promise.all([
-    getCardsForReview(activeCategory),
-    getAllUserCategories()
-  ])
+  // Fetch cards first (this triggers initializeUserCards)
+  const cards = await getCardsForReview(activeCategory)
+  
+  // Then fetch categories so they reflect the newly initialized cards
+  const allCategories = await getAllUserCategories()
 
   return (
     <div className="px-6 py-8 md:px-12 md:py-12 max-w-3xl mx-auto">

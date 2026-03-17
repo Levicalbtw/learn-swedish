@@ -140,6 +140,7 @@ async function initializeUserCards(userId: string) {
     .select('id')
     .or(`user_id.is.null,user_id.eq.${userId}`)
     .in('level', ['A1', 'A2', 'B1', 'B2'])
+    .limit(10000)
 
   if (!allVocab) return
 
@@ -156,7 +157,12 @@ async function initializeUserCards(userId: string) {
     }))
 
   if (newEntries.length > 0) {
-    await supabase.from('user_progress').insert(newEntries)
+    const { error: insertError } = await supabase.from('user_progress').insert(newEntries)
+    if (insertError) {
+      console.error('[Flashcards] Error initializing new cards:', insertError)
+    } else {
+      console.log(`[Flashcards] Successfully initialized ${newEntries.length} new cards.`)
+    }
   }
 }
 
