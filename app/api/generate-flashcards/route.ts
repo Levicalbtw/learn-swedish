@@ -99,23 +99,31 @@ ${sanitizedContent}
     
     const categoryName = lessonData?.title ? `Lesson: ${lessonData.title}` : `Lesson: ${lessonId}`
 
-    const vocabToInsert = flashcards.map(fv => ({
-      swedish: fv.swedish.toLowerCase(),
-      english: fv.english.toLowerCase(),
-      example_sv: fv.example_sv,
-      example_en: fv.example_en,
-      category: categoryName,
-      level: lessonLevel || 'A1',
-      user_id: session.user.id // TAG WITH USER ID FOR PRIVACY
-    }))
+    const vocabToInsert = flashcards
+      .map(fv => ({
+        swedish: fv.swedish.toLowerCase().trim(),
+        english: fv.english.toLowerCase().trim(),
+        example_sv: fv.example_sv,
+        example_en: fv.example_en,
+        category: categoryName,
+        level: lessonLevel || 'A1',
+        user_id: session.user.id
+      }))
+      // Deduplicate by swedish word (LLM can return the same word twice)
+      .filter((v, i, arr) => arr.findIndex(a => a.swedish === v.swedish) === i)
 
     // Check which words already exist for this user
     const swedishWords = vocabToInsert.map(v => v.swedish)
-    const { data: existingVocab } = await adminSupabase
+    const { data: existingVocab, error: existingError } = await adminSupabase
       .from('vocabulary')
       .select('id, swedish')
       .eq('user_id', session.user.id)
       .in('swedish', swedishWords)
+
+    if (existingError) {
+      console.error('[Flashcards] Error checking existing vocab:', existingError)
+      return NextResponse.json({ error: 'Database error while checking existing vocabulary' }, { status: 500 })
+    }
 
     const existingWords = new Set((existingVocab || []).map((v: { swedish: string }) => v.swedish))
     const newVocab = vocabToInsert.filter(v => !existingWords.has(v.swedish))
@@ -131,7 +139,8 @@ ${sanitizedContent}
         .select('id, swedish')
 
       if (vocabError) {
-        console.error('Vocab Insert Error:', vocabError)
+        console.error('[Flashcards] Vocab Insert Error:', vocabError)
+        console.error('[Flashcards] Attempted to insert:', JSON.stringify(newVocab.map(v => v.swedish)))
         return NextResponse.json({ error: 'Database error while saving vocabulary' }, { status: 500 })
       }
 
@@ -156,7 +165,7 @@ ${sanitizedContent}
       .upsert(progressToInsert, { onConflict: 'user_id, vocab_id', ignoreDuplicates: true })
 
     if (progressError) {
-       console.error('Progress Insert Error:', progressError)
+       console.error('[Flashcards] Progress Insert Error:', progressError)
        return NextResponse.json({ error: 'Failed to add flashcards to your deck' }, { status: 500 })
     }
 
